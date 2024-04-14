@@ -43,8 +43,7 @@ ZitatespuckerZitat *ZitatespuckerJSONGetZitatAllFromFile(const char *filename, s
 // TODO:
 // Filter functions:
 // ZitatespuckerZitat *ZitatespuckerJSONGetZitatAllBy* where * is Author, Year, etc
-// static inline function for retrieving the array object?
-// function for retrieving from a series of .json files?
+// function for retrieving from a series of .json files? (link lists together)
 
 
 #endif

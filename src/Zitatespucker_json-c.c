@@ -45,7 +45,7 @@ static ZitatespuckerZitat *ZitatespuckerJSONGetZitatSingle(json_object *ZitatArr
 	
 	This function allocates, and the given object must be freed with ZitatespuckerZitatFree().
 */
-static ZitatespuckerZitat *ZitatespuckerJSONPopulateStruct(json_object *ZitatObj);
+static ZitatespuckerZitat *ZitatespuckerJSONGetPopulatedStruct(json_object *ZitatObj);
 
 /*
 	Get child object of name keyName from Parent, returning its string content.
@@ -143,7 +143,7 @@ static ZitatespuckerZitat *ZitatespuckerJSONGetZitatSingle(json_object *ZitatArr
 
 	json_object *ZitatObj = json_object_array_get_idx(ZitatArray, idx);
 	if (ZitatObj != NULL) {
-		ZitatespuckerZitat *ret = ZitatespuckerJSONPopulateStruct(ZitatObj);
+		ZitatespuckerZitat *ret = ZitatespuckerJSONGetPopulatedStruct(ZitatObj);
 		return ret;
 	} else {
 		fprintf(stderr, "%s:%d:%s: json_object_array_get_idx() returned NULL, wrong index?\n", __FILE__, __LINE__, __func__);
@@ -152,7 +152,7 @@ static ZitatespuckerZitat *ZitatespuckerJSONGetZitatSingle(json_object *ZitatArr
 
 }
 
-static ZitatespuckerZitat *ZitatespuckerJSONPopulateStruct(json_object *ZitatObj) {
+static ZitatespuckerZitat *ZitatespuckerJSONGetPopulatedStruct(json_object *ZitatObj) {
 
 	ZitatespuckerZitat *Zitat;
 	if ((Zitat = (ZitatespuckerZitat *) malloc(sizeof(ZitatespuckerZitat))) == NULL) {
@@ -166,11 +166,9 @@ static ZitatespuckerZitat *ZitatespuckerJSONPopulateStruct(json_object *ZitatObj
 
 	// author
 	Zitat->author = ZitatespuckerJSONGetStringAllocated(ZitatObj, AUTHOR, tmpObj);
-	tmpObj = NULL;
 
 	// zitat
 	Zitat->zitat = ZitatespuckerJSONGetStringAllocated(ZitatObj, ZITAT, tmpObj);
-	tmpObj = NULL;
 
 	// day
 	int32_t tmpInt = ZitatespuckerJSONGetInt(ZitatObj, DAY, tmpObj);
@@ -199,9 +197,7 @@ static ZitatespuckerZitat *ZitatespuckerJSONPopulateStruct(json_object *ZitatObj
 	// annodomini
 	if (json_object_object_get_ex(ZitatObj, ANNODOMINI, &tmpObj)) {
 		Zitat->annodomini = json_object_get_boolean(tmpObj);
-		tmpObj = NULL;
 	}
-
 
 	return Zitat;
 
@@ -216,8 +212,10 @@ static inline char *ZitatespuckerJSONGetStringAllocated(json_object *Parent, con
 			strcpy(tmpS, json_object_get_string(child));
 			return tmpS;
 		}
-	} else // TODO: print an error
+	} else {
+		fprintf(stderr, "%s:%d:%s: Key \"%s\" not found.\n", __FILE__, __LINE__, __func__, keyName);
 		return NULL;
+	}
 
 }
 
