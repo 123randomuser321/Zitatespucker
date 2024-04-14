@@ -1,0 +1,7 @@
+TODO.txt
+.vscode/
+build.sh
+Makefile
+testing/
+*.so
+*.a
