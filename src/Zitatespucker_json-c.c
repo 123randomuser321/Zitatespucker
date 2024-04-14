@@ -31,6 +31,15 @@
 static json_object *ZitatespuckerJSONGetZitatArrayFromFile(const char *filename);
 
 /*
+	Returns a pointer to single populated ZitatespuckerZitat.
+	idx refers to the array index within ZitatArray.
+	NULL on error.
+
+	This function allocates, and the given object must be freed with ZitatespuckerZitatFree().
+*/
+static ZitatespuckerZitat *ZitatespuckerJSONGetZitatSingle(json_object *ZitatArray, const size_t idx);
+
+/*
 	Populate a ZitatespuckerZitat struct with the information within ZitatObj and return it.
 	NULL on error.
 	
@@ -66,14 +75,40 @@ size_t ZitatespuckerJSONGetAmountFromFile(const char *filename) {
 
 }
 
-ZitatespuckerZitat *ZitatespuckerJSONGetZitatSingle(const char *filename, const size_t idx) {
+ZitatespuckerZitat *ZitatespuckerJSONGetZitatSingleFromFile(const char *filename, const size_t idx) {
 
 	json_object *ZitatArray;
 	if ((ZitatArray = ZitatespuckerJSONGetZitatArrayFromFile(filename)) == NULL)
 		return NULL;
 	else {
-		json_object *ZitatObj = json_object_array_get_idx(ZitatArray, idx);
-		ZitatespuckerZitat *ret = ZitatespuckerJSONPopulateStruct(ZitatObj);
+		ZitatespuckerZitat *ret = ZitatespuckerJSONGetZitatSingle(ZitatArray, idx);
+		json_object_put(ZitatArray);
+		return ret;
+	}
+
+}
+
+ZitatespuckerZitat *ZitatespuckerJSONGetZitatAllFromFile(const char *filename, size_t *lenstore) {
+
+	json_object *ZitatArray;
+	if ((ZitatArray = ZitatespuckerJSONGetZitatArrayFromFile(filename)) == NULL)
+		return NULL;
+	else {
+		size_t len = json_object_array_length(ZitatArray);
+		if (lenstore != NULL)
+			*lenstore = len;
+		ZitatespuckerZitat *ret = ZitatespuckerJSONGetZitatSingle(ZitatArray, 0);
+		if (ret != NULL) {
+			size_t i = 1;
+			ZitatespuckerZitat *cur = ret;
+			for ( ; i < len; i++) {
+				cur->nextZitat = ZitatespuckerJSONGetZitatSingle(ZitatArray, i);
+				if (cur->nextZitat != NULL)
+					cur = cur->nextZitat;
+				else
+					break;
+			}
+		}
 		json_object_put(ZitatArray);
 		return ret;
 	}
@@ -100,6 +135,19 @@ static json_object *ZitatespuckerJSONGetZitatArrayFromFile(const char *filename)
 		json_object_get(ZitatArray);
 		json_object_put(globalscope);
 		return ZitatArray;
+	}
+
+}
+
+static ZitatespuckerZitat *ZitatespuckerJSONGetZitatSingle(json_object *ZitatArray, const size_t idx) {
+
+	json_object *ZitatObj = json_object_array_get_idx(ZitatArray, idx);
+	if (ZitatObj != NULL) {
+		ZitatespuckerZitat *ret = ZitatespuckerJSONPopulateStruct(ZitatObj);
+		return ret;
+	} else {
+		fprintf(stderr, "%s:%d:%s: json_object_array_get_idx() returned NULL, wrong index?\n", __FILE__, __LINE__, __func__);
+		return NULL;
 	}
 
 }
