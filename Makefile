@@ -22,13 +22,17 @@ all : $(objects)
 	$(CC) $(LDFLAGS) $^ -o build/$(LIBPREFIX)Zitatespucker.$(LIBSUFFIX)
 	rm -f build/*.o
 
-build/Zitatespucker_common.o : src/Zitatespucker_common.c #Zitatespucker/Zitatespucker_common.h
+build/Zitatespucker_common.o : src/Zitatespucker_common.c
 	mkdir -p build
 	$(CC) -c $(CFLAGS) $^ -o $@
 
-build/Zitatespucker_json-c.o : src/Zitatespucker_json-c.c #Zitatespucker/Zitatespucker_json-c.h Zitatespucker/Zitatespucker_common.h
+build/Zitatespucker_json-c.o : src/Zitatespucker_json-c.c
 	mkdir -p build
 	$(CC) -c $(CFLAGS) $^ -o $@
+
+src/Zitatespucker_common.c : Zitatespucker/Zitatespucker_common.h
+
+src/Zitatespucker_json-c.c : Zitatespucker/Zitatespucker_json-c.h Zitatespucker/Zitatespucker_common.h
 
 .PHONY : clean
 clean : 
