@@ -43,7 +43,7 @@ typedef struct ZitatespuckerZitat {
 	//char *comment; /* A comment on the quote */
 	uint8_t day; /* Day of origin */
 	uint8_t month; /* Month of origin */
-	uint16_t year; /* Year of origin */
+	uint16_t year; /* Year of origin; if this is 0 and anoodomini is false, this value is considered invalid */
 	bool annodomini; /* true --> AD; false --> BC */
 	struct ZitatespuckerZitat *nextZitat; /* Points to the next ZitatespuckerZitat (linked list behavior) */
 } ZitatespuckerZitat;
