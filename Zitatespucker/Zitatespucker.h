@@ -40,8 +40,8 @@
 #endif
 
 // TODO:
-// Makefile
 // Tests (for error cases etc)
+// Integrity verification of struct?
 // "NOFEATURES" preproc flag to stop compilation when nothing is enabled?
 // UIs: Nuklear (also test on Windows); Win32
 // SQL (https://www.sqlite.org/)
