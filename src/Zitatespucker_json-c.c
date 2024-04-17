@@ -237,9 +237,12 @@ static inline char *ZitatespuckerJSONGetStringAllocated(json_object *Parent, con
 static inline int32_t ZitatespuckerJSONGetInt(json_object *Parent, const char *keyName, json_object *child) {
 
 	if (json_object_object_get_ex(Parent, keyName, &child)) {
+		errno = 0; // reset errno to prevent false positive
 		int32_t tmpInt = json_object_get_int(child);
-		if (errno == EINVAL) // errno is not guaranteed to be unset, so this might trigger a false positive
+		if (errno == EINVAL) {
 			(void) fprintf(stderr, "%s:%d:%s: No valid conversion for key \"%s\".\n", __FILE__, __LINE__, __func__, keyName);
+			errno = 0; // and reset again, to prevent false positives down the line
+		}
 		return tmpInt;
 	} else {
 		(void) fprintf(stderr, "%s:%d:%s: Key \"%s\" not found.\n", __FILE__, __LINE__, __func__, keyName);
