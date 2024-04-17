@@ -16,7 +16,7 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-.PHONY : all dynamic static clean
+.PHONY : all dynamic static install install-headers install-dynamic install-static uninstall uninstall-headers uninstall-dynamic uninstall-static clean
 
 
 # todo: windows
@@ -27,10 +27,15 @@ LIBSUFFIX_STATIC = a
 MAJOR = 0
 MINOR = 0
 PATCH = 1
+ifeq ($(PREFIX),)
+	PREFIX = usr/local
+endif
 
 LIBNAME = $(LIBPREFIX)Zitatespucker
 LIBNAME_DYN = $(LIBNAME).$(LIBSUFFIX_DYN)
 LIBNAME_STATIC = $(LIBNAME).$(LIBSUFFIX_STATIC)
+
+HEADERS = Zitatespucker/Zitatespucker.h Zitatespucker/Zitatespucker_common.h
 
 ifneq ($(DEBUG),)
 	CFLAGS += -g
@@ -44,15 +49,16 @@ objects = $(BUILDDIR)/Zitatespucker_common.o
 # -fPIC needs to be added due to the build failing with "relocation R_X86_64_PC32 against symbol `stderr@@GLIBC_2.2.5' can not be used when making a shared object" otherwise
 # gcc' manual recommends adding flags to both compiler and linker flags
 ifneq ($(ENABLE_JSON_C),)
+	HEADERS += Zitatespucker/Zitatespucker_json-c.h
 	CFLAGS += -D ZITATESPUCKER_FEATURE_JSON_C -fPIC
 	ifneq ($(ENABLE_JSON_C_STATIC),)
 		LDFLAGS += -Wl,-Bstatic
 	endif
 	LDFLAGS += -ljson-c -fPIC
-		objects += $(BUILDDIR)/Zitatespucker_json-c.o 
+	objects += $(BUILDDIR)/Zitatespucker_json-c.o 
 endif
 
-# todo: install and uninstall target
+# todo: prevent whitespace issues in variable substitution
 # todo: echoing (https://www.gnu.org/software/make/manual/html_node/Echoing.html)
 # https://www.gnu.org/prep/standards/html_node/Standard-Targets.html
 # todo: 'check' target for tests
@@ -61,8 +67,6 @@ all : dynamic static
 # question: should a crossbuild for Windows omit "-soname"?
 dynamic : $(objects)
 	$(CC) $(LDFLAGS) -Wl,-Bdynamic -lc -shared -Wl,-soname,$(LIBNAME_DYN).$(MAJOR) $^ -o $(BUILDDIR)/$(LIBNAME_DYN).$(MAJOR).$(MINOR).$(PATCH)
-	-ln -s $(LIBNAME_DYN).$(MAJOR).$(MINOR).$(PATCH) $(BUILDDIR)/$(LIBNAME_DYN).$(MAJOR)
-	-ln -s $(LIBNAME_DYN).$(MAJOR) $(BUILDDIR)/$(LIBNAME_DYN)
 
 static : $(objects)
 	$(AR) $(ARFLAGS) $(BUILDDIR)/$(LIBNAME_STATIC) $^
@@ -78,6 +82,36 @@ $(BUILDDIR)/Zitatespucker_json-c.o : src/Zitatespucker_json-c.c
 src/Zitatespucker_common.c : Zitatespucker/Zitatespucker_common.h
 
 src/Zitatespucker_json-c.c : Zitatespucker/Zitatespucker_json-c.h Zitatespucker/Zitatespucker_common.h
+
+install : install-headers install-dynamic install-static
+
+# would it be better to put the headers as a prerequisite here?
+install-headers : 
+	install -d "$(DESTDIR)"/"$(PREFIX)"/lib/Zitatespucker
+	install -m 0644 -t "$(DESTDIR)"/"$(PREFIX)"/lib/Zitatespucker $(HEADERS)
+
+install-dynamic : install-headers dynamic
+	install -d "$(DESTDIR)"/"$(PREFIX)"/lib
+	install -t "$(DESTDIR)"/"$(PREFIX)"/lib $(BUILDDIR)/$(LIBNAME_DYN).$(MAJOR).$(MINOR).$(PATCH)
+	ln -s $(LIBNAME_DYN).$(MAJOR).$(MINOR).$(PATCH) "$(DESTDIR)"/"$(PREFIX)"/lib/$(LIBNAME_DYN).$(MAJOR)
+	ln -s $(LIBNAME_DYN).$(MAJOR) "$(DESTDIR)"/"$(PREFIX)"/lib/$(LIBNAME_DYN)
+
+install-static : install-headers static
+	install -d "$(DESTDIR)"/"$(PREFIX)"/lib
+	install -t "$(DESTDIR)"/"$(PREFIX)"/lib $(BUILDDIR)/$(LIBNAME_STATIC)
+
+uninstall : uninstall-headers uninstall-dynamic uninstall-static
+
+uninstall-headers :
+	-rm -rf "$(DESTDIR)"/"$(PREFIX)"/lib/Zitatespucker
+
+uninstall-dynamic : 
+	-rm -f "$(DESTDIR)"/"$(PREFIX)"/lib/$(LIBNAME_DYN).$(MAJOR).$(MINOR).$(PATCH)
+	-rm -f "$(DESTDIR)"/"$(PREFIX)"/lib/$(LIBNAME_DYN).$(MAJOR)
+	-rm -f "$(DESTDIR)"/"$(PREFIX)"/lib/$(LIBNAME_DYN)
+
+uninstall-static : 
+	-rm -f "$(DESTDIR)"/"$(PREFIX)"/lib/$(LIBNAME_STATIC)
 
 clean : 
 	-rm -rf $(BUILDDIR)
