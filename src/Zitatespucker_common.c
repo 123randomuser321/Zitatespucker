@@ -19,6 +19,12 @@
 */
 
 
+/* check for version information, should be passed by make */
+#if !defined (ZITATESPUCKER_VERSION_MAJOR) || !defined (ZITATESPUCKER_VERSION_MINOR) || !defined (ZITATESPUCKER_VERSION_PATCH)
+	#error "Version information undefined, maybe a Makefile error?"
+#endif
+
+
 /* Standard headers */
 #include <stdlib.h>
 
@@ -28,6 +34,21 @@
 
 
 /* Common functions */
+
+void ZitatespuckerGetVersion(uint8_t *major, uint8_t *minor, uint8_t *patch) {
+
+	if (major != NULL)
+		*major = ZITATESPUCKER_VERSION_MAJOR;
+	
+	if (minor != NULL)
+		*minor = ZITATESPUCKER_VERSION_MINOR;
+	
+	if (patch != NULL)
+		*patch = ZITATESPUCKER_VERSION_PATCH;
+	
+	return;
+
+}
 
 void ZitatespuckerZitatInit(ZitatespuckerZitat *ZitatToInit) {
 

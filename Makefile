@@ -24,15 +24,20 @@ BUILDDIR = build
 LIBPREFIX = lib
 LIBSUFFIX_DYN = so
 LIBSUFFIX_STATIC = a
+MAJOR = 0
+MINOR = 0
+PATCH = 1
 
 LIBNAME = $(LIBPREFIX)Zitatespucker
+LIBNAME_DYN = $(LIBNAME).$(LIBSUFFIX_DYN)
+LIBNAME_STATIC = $(LIBNAME).$(LIBSUFFIX_STATIC)
 
 ifneq ($(DEBUG),)
 	CFLAGS += -g
 	CFLAGS += -Wpedantic
 endif
 
-CFLAGS += -std=c99 -I.
+CFLAGS += -std=c99 -I. -D ZITATESPUCKER_VERSION_MAJOR=$(MAJOR) -D ZITATESPUCKER_VERSION_MINOR=$(MINOR) -D ZITATESPUCKER_VERSION_PATCH=$(PATCH)
 
 objects = $(BUILDDIR)/Zitatespucker_common.o
 
@@ -53,11 +58,14 @@ endif
 # todo: 'check' target for tests
 all : dynamic static
 
+# question: should a crossbuild for Windows omit "-soname"?
 dynamic : $(objects)
-	$(CC) $(LDFLAGS) -Wl,-Bdynamic -lc -shared $^ -o $(BUILDDIR)/$(LIBNAME).$(LIBSUFFIX_DYN)
+	$(CC) $(LDFLAGS) -Wl,-Bdynamic -lc -shared -Wl,-soname,$(LIBNAME_DYN).$(MAJOR) $^ -o $(BUILDDIR)/$(LIBNAME_DYN).$(MAJOR).$(MINOR).$(PATCH)
+	-ln -s $(LIBNAME_DYN).$(MAJOR).$(MINOR).$(PATCH) $(BUILDDIR)/$(LIBNAME_DYN).$(MAJOR)
+	-ln -s $(LIBNAME_DYN).$(MAJOR) $(BUILDDIR)/$(LIBNAME_DYN)
 
 static : $(objects)
-	$(AR) $(ARFLAGS) $(BUILDDIR)/$(LIBNAME).$(LIBSUFFIX_STATIC) $^
+	$(AR) $(ARFLAGS) $(BUILDDIR)/$(LIBNAME_STATIC) $^
 
 $(BUILDDIR)/Zitatespucker_common.o : src/Zitatespucker_common.c
 	mkdir -p $(BUILDDIR)

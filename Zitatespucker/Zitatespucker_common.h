@@ -52,6 +52,16 @@ typedef struct ZitatespuckerZitat {
 /* Common functions */
 
 /*
+	Get the current version of the library.
+
+	Or, alternatively, the version you statically linked.
+
+	Version is returned by storing numbers in the passed pointers, each of which may be NULL (to not store something).
+*/
+void ZitatespuckerGetVersion(uint8_t *major, uint8_t *minor, uint8_t *patch);
+
+
+/*
 	Initialize a ZitatespuckerZitat.
 */
 void ZitatespuckerZitatInit(ZitatespuckerZitat *ZitatToInit);
