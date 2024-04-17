@@ -59,6 +59,7 @@ ZitatespuckerZitat *ZitatespuckerJSONGetZitatAllFromFile(const char *filename, s
 // Filter functions:
 // ZitatespuckerZitat *ZitatespuckerJSONGetZitatAllBy* where * is Author, Year, etc
 // function for retrieving from a series of .json files? (link lists together)
+// fprintf calls: check for error (perror)
 
 
 #endif

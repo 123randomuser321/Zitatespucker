@@ -137,13 +137,13 @@ static json_object *ZitatespuckerJSONGetZitatArrayFromFile(const char *filename)
 
 	json_object *globalscope;
 	if ((globalscope = json_object_from_file(filename)) == NULL) {
-		fprintf(stderr, "%s:%d:%s: json_object_from_file() failed:\n%s\n", __FILE__, __LINE__, __func__, json_util_get_last_err());
+		(void) fprintf(stderr, "%s:%d:%s: json_object_from_file() failed:\n%s\n", __FILE__, __LINE__, __func__, json_util_get_last_err());
 		return NULL;
 	}
 
 	json_object *ZitatArray;
 	if (!json_object_object_get_ex(globalscope, ZITATESPUCKERZITATKEYNAME, &ZitatArray)) {
-		fprintf(stderr, "%s:%d:%s: json_object_object_get_ex() failed:\nKey does not exist.\n", __FILE__, __LINE__, __func__);
+		(void) fprintf(stderr, "%s:%d:%s: json_object_object_get_ex() failed:\nKey does not exist.\n", __FILE__, __LINE__, __func__);
 		json_object_put(globalscope);
 		return NULL;
 	} else {
@@ -161,7 +161,7 @@ static ZitatespuckerZitat *ZitatespuckerJSONGetZitatSingle(json_object *ZitatArr
 		ZitatespuckerZitat *ret = ZitatespuckerJSONGetPopulatedStruct(ZitatObj);
 		return ret;
 	} else {
-		fprintf(stderr, "%s:%d:%s: json_object_array_get_idx() returned NULL, wrong index?\n", __FILE__, __LINE__, __func__);
+		(void) fprintf(stderr, "%s:%d:%s: json_object_array_get_idx() returned NULL, wrong index?\n", __FILE__, __LINE__, __func__);
 		return NULL;
 	}
 
@@ -171,7 +171,7 @@ static ZitatespuckerZitat *ZitatespuckerJSONGetPopulatedStruct(json_object *Zita
 
 	ZitatespuckerZitat *Zitat;
 	if ((Zitat = (ZitatespuckerZitat *) malloc(sizeof(ZitatespuckerZitat))) == NULL) {
-		fprintf(stderr, "%s:%d:%s: malloc() returned NULL.\n", __FILE__, __LINE__, __func__);
+		(void) fprintf(stderr, "%s:%d:%s: malloc() returned NULL.\n", __FILE__, __LINE__, __func__);
 		return NULL;
 	}
 	// init
@@ -228,7 +228,7 @@ static inline char *ZitatespuckerJSONGetStringAllocated(json_object *Parent, con
 			return tmpS;
 		}
 	} else {
-		fprintf(stderr, "%s:%d:%s: Key \"%s\" not found.\n", __FILE__, __LINE__, __func__, keyName);
+		(void) fprintf(stderr, "%s:%d:%s: Key \"%s\" not found.\n", __FILE__, __LINE__, __func__, keyName);
 		return NULL;
 	}
 
@@ -239,10 +239,10 @@ static inline int32_t ZitatespuckerJSONGetInt(json_object *Parent, const char *k
 	if (json_object_object_get_ex(Parent, keyName, &child)) {
 		int32_t tmpInt = json_object_get_int(child);
 		if (errno == EINVAL) // errno is not guaranteed to be unset, so this might trigger a false positive
-			fprintf(stderr, "%s:%d:%s: No valid conversion for key \"%s\".\n", __FILE__, __LINE__, __func__, keyName);
+			(void) fprintf(stderr, "%s:%d:%s: No valid conversion for key \"%s\".\n", __FILE__, __LINE__, __func__, keyName);
 		return tmpInt;
 	} else {
-		fprintf(stderr, "%s:%d:%s: Key \"%s\" not found.\n", __FILE__, __LINE__, __func__, keyName);
+		(void) fprintf(stderr, "%s:%d:%s: Key \"%s\" not found.\n", __FILE__, __LINE__, __func__, keyName);
 		return 0;
 	}
 
