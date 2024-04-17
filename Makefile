@@ -21,7 +21,7 @@
 LIBPREFIX = lib
 LIBSUFFIX = so
 
-ifeq ($(DEBUG), 1)
+ifneq ($(DEBUG),)
 	CFLAGS += -g
 endif
 
@@ -31,7 +31,7 @@ LDFLAGS += -shared
 objects = build/Zitatespucker_common.o
 
 # -fPIC needs to be added due to the build failing with "relocation R_X86_64_PC32 against symbol `stderr@@GLIBC_2.2.5' can not be used when making a shared object" otherwise
-ifeq ($(ENABLE_JSON_C), 1)
+ifneq ($(ENABLE_JSON_C),)
 	CFLAGS += -D ZITATESPUCKER_FEATURE_JSON_C -fPIC
 	LDFLAGS += -ljson-c
 	objects += build/Zitatespucker_json-c.o 
