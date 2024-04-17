@@ -40,7 +40,6 @@
 #endif
 
 // TODO:
-// Tests (for error cases etc)
 // UIs: Nuklear (also test on Windows); Win32
 // SQL (https://www.sqlite.org/)
 #endif
