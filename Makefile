@@ -27,6 +27,7 @@ LIBNAME = $(LIBPREFIX)Zitatespucker
 
 ifneq ($(DEBUG),)
 	CFLAGS += -g
+	CFLAGS += -Wpedantic
 endif
 
 CFLAGS += -std=c99 -I.
@@ -34,17 +35,15 @@ CFLAGS += -std=c99 -I.
 objects = $(BUILDDIR)/Zitatespucker_common.o
 
 # -fPIC needs to be added due to the build failing with "relocation R_X86_64_PC32 against symbol `stderr@@GLIBC_2.2.5' can not be used when making a shared object" otherwise
+# gcc' manual recommends adding flags to both compiler and linker flags
 ifneq ($(ENABLE_JSON_C),)
 	CFLAGS += -D ZITATESPUCKER_FEATURE_JSON_C -fPIC
-	LDFLAGS += -ljson-c
+	LDFLAGS += -ljson-c -fPIC
 	objects += $(BUILDDIR)/Zitatespucker_json-c.o 
 endif
 
-# todo: target for building all objects without linking
 # todo: install and uninstall target
-# todo: static:, etc
 # https://www.gnu.org/prep/standards/html_node/Standard-Targets.html
-# https://www.howtogeek.com/427086/how-to-use-linuxs-ar-command-to-create-static-libraries/
 all : dynamic static
 
 dynamic : $(objects)
