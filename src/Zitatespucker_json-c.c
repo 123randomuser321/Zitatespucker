@@ -137,7 +137,7 @@ static json_object *ZitatespuckerJSONGetZitatArrayFromFile(const char *filename)
 
 	json_object *globalscope;
 	if ((globalscope = json_object_from_file(filename)) == NULL) {
-		(void) fprintf(stderr, "%s:%d:%s: json_object_from_file() failed:\n%s\n", __FILE__, __LINE__, __func__, json_util_get_last_err());
+		(void) fprintf(stderr, "%s:%d:%s: json_object_from_file() failed:\n%s", __FILE__, __LINE__, __func__, json_util_get_last_err());
 		return NULL;
 	}
 
