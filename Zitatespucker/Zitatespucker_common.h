@@ -63,6 +63,8 @@ void ZitatespuckerGetVersion(uint8_t *major, uint8_t *minor, uint8_t *patch);
 
 /*
 	Initialize a ZitatespuckerZitat.
+
+	You generally do not want to call this yourself, as the backends do the allocation.
 */
 void ZitatespuckerZitatInit(ZitatespuckerZitat *ZitatToInit);
 
