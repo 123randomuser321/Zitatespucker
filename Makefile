@@ -38,8 +38,11 @@ objects = $(BUILDDIR)/Zitatespucker_common.o
 # gcc' manual recommends adding flags to both compiler and linker flags
 ifneq ($(ENABLE_JSON_C),)
 	CFLAGS += -D ZITATESPUCKER_FEATURE_JSON_C -fPIC
+	ifneq ($(ENABLE_JSON_C_STATIC),)
+		LDFLAGS += -Wl,-Bstatic
+	endif
 	LDFLAGS += -ljson-c -fPIC
-	objects += $(BUILDDIR)/Zitatespucker_json-c.o 
+		objects += $(BUILDDIR)/Zitatespucker_json-c.o 
 endif
 
 # todo: install and uninstall target
@@ -47,7 +50,7 @@ endif
 all : dynamic static
 
 dynamic : $(objects)
-	$(CC) $(LDFLAGS) -shared $^ -o $(BUILDDIR)/$(LIBNAME).$(LIBSUFFIX_DYN)
+	$(CC) $(LDFLAGS) -Wl,-Bdynamic -lc -shared $^ -o $(BUILDDIR)/$(LIBNAME).$(LIBSUFFIX_DYN)
 
 static : $(objects)
 	$(AR) $(ARFLAGS) $(BUILDDIR)/$(LIBNAME).$(LIBSUFFIX_STATIC) $^
