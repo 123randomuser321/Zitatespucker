@@ -1,0 +1,45 @@
+{
+	"ZitatespuckerZitat": [
+		{
+			"author": "Linus Torvalds",
+			"zitat": "Software is like sex: It's better when it's free.",
+			"day": 0,
+			"month": 0,
+			"year": 1996,
+			"annodomini": true
+		},
+		{
+			"author": "Ein Esel",
+			"zitat": "ÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖÖ",
+			"day": 21,
+			"month": 3,
+			"year": 2022,
+			"annodomini": true
+		},
+		{
+			"author": "東条英機",
+			"zitat": "冰淇淋",
+			"day": 4,
+			"month": 2,
+			"year": 2018,
+			"annodomini": false
+		},
+		{
+			"author": "FalseYearMan",
+			"zitat": "This quote has an incorrect year",
+			"day": 2,
+			"month": 8,
+			"year": 0,
+			"annodomini": false
+		},
+		{},
+		{
+			"author": 2,
+			"zitat": false,
+			"day": "AAA",
+			"month": "冰淇淋",
+			"year": 4529,
+			"annodomini": "Hello Guys"
+		}
+	]
+}
