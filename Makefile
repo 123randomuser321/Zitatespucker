@@ -16,6 +16,8 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+.PHONY : all dynamic static clean
+
 
 # todo: windows
 BUILDDIR = build
@@ -46,7 +48,9 @@ ifneq ($(ENABLE_JSON_C),)
 endif
 
 # todo: install and uninstall target
+# todo: echoing (https://www.gnu.org/software/make/manual/html_node/Echoing.html)
 # https://www.gnu.org/prep/standards/html_node/Standard-Targets.html
+# todo: 'check' target for tests
 all : dynamic static
 
 dynamic : $(objects)
@@ -67,6 +71,5 @@ src/Zitatespucker_common.c : Zitatespucker/Zitatespucker_common.h
 
 src/Zitatespucker_json-c.c : Zitatespucker/Zitatespucker_json-c.h Zitatespucker/Zitatespucker_common.h
 
-.PHONY : clean
 clean : 
 	-rm -rf $(BUILDDIR)
