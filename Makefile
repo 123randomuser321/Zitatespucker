@@ -58,7 +58,6 @@ ifneq ($(ENABLE_JSON_C),)
 	objects += $(BUILDDIR)/Zitatespucker_json-c.o 
 endif
 
-# todo: prevent whitespace issues in variable substitution
 # todo: echoing (https://www.gnu.org/software/make/manual/html_node/Echoing.html)
 # https://www.gnu.org/prep/standards/html_node/Standard-Targets.html
 # todo: 'check' target for tests
