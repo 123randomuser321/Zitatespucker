@@ -40,6 +40,6 @@
 #endif
 
 // TODO:
-// UIs: Nuklear (also test on Windows); Win32
+// UIs: ncurses (also test on Windows); Win32
 // SQL (https://www.sqlite.org/)
 #endif
