@@ -16,7 +16,7 @@
 #	You should have received a copy of the GNU General Public License
 #	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-.PHONY : all dynamic static install install-headers install-dynamic install-static uninstall uninstall-headers uninstall-dynamic uninstall-static clean
+.PHONY : all dynamic static install install-headers install-dynamic install-static uninstall uninstall-headers uninstall-dynamic uninstall-static clean check
 
 
 # todo: windows
@@ -114,3 +114,9 @@ uninstall-static :
 
 clean : 
 	-rm -rf $(BUILDDIR)
+	-rm -rf tests/build
+
+check :
+	mkdir -p tests/build
+	$(CC) ./tests/Zitatespucker_json-c_tests.c -I. -L./$(BUILDDIR) -lZitatespucker -ljson-c -o ./tests/build/Zitatespucker_json-c_tests 
+	cd tests/build && ./Zitatespucker_json-c_tests

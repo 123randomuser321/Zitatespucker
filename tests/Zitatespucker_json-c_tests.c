@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
 	assert(ZitatespuckerJSONGetZitatSingleFromFile("wrongfilename.json", 0) == NULL);
 	printf("OKAY!\n\n");
 	printf("Checking whether an incorrect index results in a NULL pointer...\n");
-	assert(ZitatespuckerJSONGetZitatSingleFromFile("testfile.json", 800) == NULL);
+	assert(ZitatespuckerJSONGetZitatSingleFromFile("../testfile.json", 800) == NULL);
 	printf("OKAY!\n\n\n");
 
 	printf("ZitatespuckerJSONGetZitatAllFromFile:\n");
@@ -52,14 +52,14 @@ int main(int argc, char **argv) {
 	printf("NOTE: This also trips the check within ZitatespuckerJSONGetStringAllocated()\n\tand both checks on ZitatespuckerJSONGetInt().\n");
 	size_t lenstore;
 	ZitatespuckerZitat *TestZitat;
-	TestZitat = ZitatespuckerJSONGetZitatAllFromFile("testfile.json", &lenstore);
+	TestZitat = ZitatespuckerJSONGetZitatAllFromFile("../testfile.json", &lenstore);
 	ZitatespuckerZitatFree(TestZitat);
 	assert(lenstore == 6);
 	printf("OKAY!\n\n\n");
 
 	printf("ZitatespuckerJSONGetZitatArrayFromFile (static):\n");
 	printf("Check whether incorrect KeyName triggers json_object_object_get_ex to return false...\n");
-	assert(ZitatespuckerJSONGetZitatAllFromFile("testfile_noarray.json", NULL) == NULL);
+	assert(ZitatespuckerJSONGetZitatAllFromFile("../testfile_noarray.json", NULL) == NULL);
 	printf("OKAY!\n\n\n");
 
 	printf("ALL CHECKS PASSED!\n");
