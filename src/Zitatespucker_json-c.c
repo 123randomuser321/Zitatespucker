@@ -103,15 +103,14 @@ ZitatespuckerZitat *ZitatespuckerJSONGetZitatSingleFromFile(const char *filename
 
 }
 
-ZitatespuckerZitat *ZitatespuckerJSONGetZitatAllFromFile(const char *filename, size_t *lenstore) {
+ZitatespuckerZitat *ZitatespuckerJSONGetZitatAllFromFile(const char *filename) {
 
 	json_object *ZitatArray;
 	if ((ZitatArray = ZitatespuckerJSONGetZitatArrayFromFile(filename)) == NULL)
 		return NULL;
 	else {
 		size_t len = json_object_array_length(ZitatArray);
-		if (lenstore != NULL)
-			*lenstore = len;
+		
 		ZitatespuckerZitat *ret = ZitatespuckerJSONGetZitatSingle(ZitatArray, 0);
 		if (ret != NULL) {
 			size_t i = 1;

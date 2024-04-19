@@ -46,20 +46,12 @@ int main(int argc, char **argv) {
 
 	printf("ZitatespuckerJSONGetZitatAllFromFile:\n");
 	printf("Checking whether an incorrect filename results in a NULL pointer...\n");
-	assert(ZitatespuckerJSONGetZitatAllFromFile("wrongfilename.json", NULL) == NULL);
-	printf("OKAY!\n\n");
-	printf("Checking whether lenstore records the correct length...\n");
-	printf("NOTE: This also trips the check within ZitatespuckerJSONGetStringAllocated()\n\tand both checks on ZitatespuckerJSONGetInt().\n");
-	size_t lenstore;
-	ZitatespuckerZitat *TestZitat;
-	TestZitat = ZitatespuckerJSONGetZitatAllFromFile("../testfile.json", &lenstore);
-	ZitatespuckerZitatFree(TestZitat);
-	assert(lenstore == 6);
+	assert(ZitatespuckerJSONGetZitatAllFromFile("wrongfilename.json") == NULL);
 	printf("OKAY!\n\n\n");
 
 	printf("ZitatespuckerJSONGetZitatArrayFromFile (static):\n");
 	printf("Check whether incorrect KeyName triggers json_object_object_get_ex to return false...\n");
-	assert(ZitatespuckerJSONGetZitatAllFromFile("../testfile_noarray.json", NULL) == NULL);
+	assert(ZitatespuckerJSONGetZitatAllFromFile("../testfile_noarray.json") == NULL);
 	printf("OKAY!\n\n\n");
 
 	printf("ALL CHECKS PASSED!\n");
