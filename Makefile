@@ -86,8 +86,8 @@ install : install-headers install-dynamic install-static
 
 # would it be better to put the headers as a prerequisite here?
 install-headers : 
-	install -d "$(DESTDIR)"/"$(PREFIX)"/lib/Zitatespucker
-	install -m 0644 -t "$(DESTDIR)"/"$(PREFIX)"/lib/Zitatespucker $(HEADERS)
+	install -d "$(DESTDIR)"/"$(PREFIX)"/include/Zitatespucker
+	install -m 0644 -t "$(DESTDIR)"/"$(PREFIX)"/include/Zitatespucker $(HEADERS)
 
 install-dynamic : install-headers dynamic
 	install -d "$(DESTDIR)"/"$(PREFIX)"/lib
@@ -102,7 +102,7 @@ install-static : install-headers static
 uninstall : uninstall-headers uninstall-dynamic uninstall-static
 
 uninstall-headers :
-	-rm -rf "$(DESTDIR)"/"$(PREFIX)"/lib/Zitatespucker
+	-rm -rf "$(DESTDIR)"/"$(PREFIX)"/include/Zitatespucker
 
 uninstall-dynamic : 
 	-rm -f "$(DESTDIR)"/"$(PREFIX)"/lib/$(LIBNAME_DYN).$(MAJOR).$(MINOR).$(PATCH)
