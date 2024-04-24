@@ -24,6 +24,7 @@ BUILDDIR = build
 LIBPREFIX = lib
 LIBSUFFIX_DYN = so
 LIBSUFFIX_STATIC = a
+EXESUFFIX = 
 MAJOR = 0
 MINOR = 0
 PATCH = 1
@@ -118,5 +119,5 @@ clean :
 
 check :
 	mkdir -p tests/build
-	$(CC) ./tests/Zitatespucker_json-c_tests.c -I. -L./$(BUILDDIR) -lZitatespucker -ljson-c -o ./tests/build/Zitatespucker_json-c_tests 
-	cd tests/build && ./Zitatespucker_json-c_tests
+	$(CC) ./tests/Zitatespucker_json-c_tests.c -I. -L./$(BUILDDIR) -lZitatespucker -ljson-c -o ./tests/build/Zitatespucker_json-c_tests$(EXESUFFIX) 
+	cd tests/build && ./Zitatespucker_json-c_tests$(EXESUFFIX)
