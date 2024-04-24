@@ -87,11 +87,11 @@ static : $(objects)
 	$(AR) $(ARFLAGS) $(BUILDDIR)/$(LIBNAME_STATIC) $^
 
 $(BUILDDIR)/Zitatespucker_common.o : src/Zitatespucker_common.c
-	mkdir -p $(BUILDDIR)
+	-mkdir $(BUILDDIR)
 	$(CC) -c $(CFLAGS) $^ -o $@
 
 $(BUILDDIR)/Zitatespucker_json-c.o : src/Zitatespucker_json-c.c
-	mkdir -p $(BUILDDIR)
+	-mkdir $(BUILDDIR)
 	$(CC) -c $(CFLAGS) $^ -o $@
 
 src/Zitatespucker_common.c : Zitatespucker/Zitatespucker_common.h
@@ -133,6 +133,6 @@ clean :
 	-rm -rf tests/build
 
 check :
-	mkdir -p tests/build
+	mkdir tests/build
 	$(CC) ./tests/Zitatespucker_json-c_tests.c -I. -L./$(BUILDDIR) -lZitatespucker -ljson-c -o ./tests/build/Zitatespucker_json-c_tests 
 	cd tests/build && ./Zitatespucker_json-c_tests
