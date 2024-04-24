@@ -81,7 +81,7 @@ all : dynamic static
 
 # mingw seems to simply ignore "-soname"?
 dynamic : $(objects)
-	$(CC) $(LDFLAGS) -Wl,-Bdynamic -l$(C_LIB_NAME) -shared -Wl,-soname,$(LIBNAME_DYN).$(MAJOR) $^ -o $(BUILDDIR)/$(LIBNAME_DYN)$(LIBNAME_DYN_SUFFIX)
+	$(CC) $^ -o $(BUILDDIR)/$(LIBNAME_DYN)$(LIBNAME_DYN_SUFFIX) $(LDFLAGS) -Wl,-Bdynamic -l$(C_LIB_NAME) -shared -Wl,-soname,$(LIBNAME_DYN).$(MAJOR)
 
 static : $(objects)
 	$(AR) $(ARFLAGS) $(BUILDDIR)/$(LIBNAME_STATIC) $^
