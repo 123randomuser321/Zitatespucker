@@ -21,13 +21,11 @@
 
 # todo: windows
 BUILDDIR = build
-LIBPREFIX = lib
-LIBSUFFIX_DYN = so
-LIBSUFFIX_STATIC = a
-C_LIB_NAME = c
+
 MAJOR = 0
 MINOR = 0
 PATCH = 1
+
 ifeq ($(DESTDIR),)
 	DESTDIR = $(BUILDDIR)
 endif
@@ -35,9 +33,24 @@ ifeq ($(PREFIX),)
 	PREFIX = usr/local
 endif
 
+ifeq ($(TARGET), win32)
+	LIBPREFIX =
+	LIBSUFFIX_DYN = dll
+	LIBSUFFIX_STATIC = lib
+	C_LIB_NAME = msvcrt
+else
+	LIBPREFIX = lib
+	LIBSUFFIX_DYN = so
+	LIBSUFFIX_STATIC = a
+	C_LIB_NAME = c
+endif
+
 LIBNAME = $(LIBPREFIX)Zitatespucker
 LIBNAME_DYN = $(LIBNAME).$(LIBSUFFIX_DYN)
 LIBNAME_STATIC = $(LIBNAME).$(LIBSUFFIX_STATIC)
+ifneq ($(TARGET), win32)
+	LIBNAME_DYN_SUFFIX = .$(MAJOR).$(MINOR).$(PATCH)
+endif
 
 HEADERS = Zitatespucker/Zitatespucker.h Zitatespucker/Zitatespucker_common.h
 
@@ -64,12 +77,11 @@ endif
 
 # todo: echoing (https://www.gnu.org/software/make/manual/html_node/Echoing.html)
 # https://www.gnu.org/prep/standards/html_node/Standard-Targets.html
-# todo: 'check' target for tests
 all : dynamic static
 
-# question: should a crossbuild for Windows omit "-soname"?
+# mingw seems to simply ignore "-soname"?
 dynamic : $(objects)
-	$(CC) $(LDFLAGS) -Wl,-Bdynamic -l$(C_LIB_NAME) -shared -Wl,-soname,$(LIBNAME_DYN).$(MAJOR) $^ -o $(BUILDDIR)/$(LIBNAME_DYN).$(MAJOR).$(MINOR).$(PATCH)
+	$(CC) $(LDFLAGS) -Wl,-Bdynamic -l$(C_LIB_NAME) -shared -Wl,-soname,$(LIBNAME_DYN).$(MAJOR) $^ -o $(BUILDDIR)/$(LIBNAME_DYN)$(LIBNAME_DYN_SUFFIX)
 
 static : $(objects)
 	$(AR) $(ARFLAGS) $(BUILDDIR)/$(LIBNAME_STATIC) $^
