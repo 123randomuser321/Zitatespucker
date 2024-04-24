@@ -24,6 +24,7 @@ BUILDDIR = build
 LIBPREFIX = lib
 LIBSUFFIX_DYN = so
 LIBSUFFIX_STATIC = a
+C_LIB_NAME = c
 MAJOR = 0
 MINOR = 0
 PATCH = 1
@@ -68,7 +69,7 @@ all : dynamic static
 
 # question: should a crossbuild for Windows omit "-soname"?
 dynamic : $(objects)
-	$(CC) $(LDFLAGS) -Wl,-Bdynamic -lc -shared -Wl,-soname,$(LIBNAME_DYN).$(MAJOR) $^ -o $(BUILDDIR)/$(LIBNAME_DYN).$(MAJOR).$(MINOR).$(PATCH)
+	$(CC) $(LDFLAGS) -Wl,-Bdynamic -l$(C_LIB_NAME) -shared -Wl,-soname,$(LIBNAME_DYN).$(MAJOR) $^ -o $(BUILDDIR)/$(LIBNAME_DYN).$(MAJOR).$(MINOR).$(PATCH)
 
 static : $(objects)
 	$(AR) $(ARFLAGS) $(BUILDDIR)/$(LIBNAME_STATIC) $^
