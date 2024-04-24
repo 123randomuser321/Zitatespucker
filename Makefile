@@ -28,6 +28,9 @@ EXESUFFIX =
 MAJOR = 0
 MINOR = 0
 PATCH = 1
+ifeq ($(DESTDIR),)
+	DESTDIR = $(BUILDDIR)
+endif
 ifeq ($(PREFIX),)
 	PREFIX = usr/local
 endif
