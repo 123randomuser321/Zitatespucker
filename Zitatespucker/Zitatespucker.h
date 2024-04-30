@@ -40,6 +40,5 @@
 #endif
 
 // TODO:
-// UIs: ncurses (also test on Windows); Win32
 // SQL (https://www.sqlite.org/)
 #endif
