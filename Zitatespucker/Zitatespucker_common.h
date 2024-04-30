@@ -24,6 +24,7 @@
 /* Standard headers */
 #include <stdint.h>
 #include <stdbool.h>
+#include <stddef.h>
 
 
 /* Key names for the ZitatespuckerZitat arrays within a .json */
@@ -73,6 +74,13 @@ void ZitatespuckerZitatInit(ZitatespuckerZitat *ZitatToInit);
 	This function doesn't care for the length of the list and will work even on just one element.
 */
 void ZitatespuckerZitatFree(ZitatespuckerZitat *ZitatToFree);
+
+/*
+	Returns the number of entries in the linked list ZitatList.
+	
+	0 if passed a NULL pointer.
+*/
+size_t ZitatespuckerZitatListLen(ZitatespuckerZitat *ZitatList);
 
 
 #endif

@@ -80,3 +80,17 @@ void ZitatespuckerZitatFree(ZitatespuckerZitat *ZitatToFree) {
 	return;
 
 }
+
+size_t ZitatespuckerZitatListLen(ZitatespuckerZitat *ZitatList) {
+	
+	if (ZitatList == NULL)
+		return 0;
+	
+	size_t ret = 1;
+
+	while ((ZitatList = ZitatList->nextZitat) != NULL)
+		ret++;
+	
+	return ret;
+
+}
