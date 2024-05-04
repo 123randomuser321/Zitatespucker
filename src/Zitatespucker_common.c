@@ -59,6 +59,7 @@ void ZitatespuckerZitatInit(ZitatespuckerZitat *ZitatToInit) {
 	ZitatToInit->year = 0;
 	ZitatToInit->annodomini = false;
 	ZitatToInit->nextZitat = NULL;
+	ZitatToInit->prevZitat = NULL;
 
 	return;
 

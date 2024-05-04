@@ -47,6 +47,7 @@ typedef struct ZitatespuckerZitat {
 	uint16_t year; /* Year of origin; if this is 0 and anoodomini is false, this value is considered invalid */
 	bool annodomini; /* true --> AD; false --> BC */
 	struct ZitatespuckerZitat *nextZitat; /* Points to the next ZitatespuckerZitat (linked list behavior) */
+	struct ZitatespuckerZitat *prevZitat; /* Points to the previous ZitatespuckerZitat (doubly linked list behavior) */
 } ZitatespuckerZitat;
 
 
