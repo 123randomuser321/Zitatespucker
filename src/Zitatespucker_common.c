@@ -76,6 +76,9 @@ void ZitatespuckerZitatFree(ZitatespuckerZitat *ZitatToFree) {
 	if (ZitatToFree->nextZitat != NULL)
 		ZitatespuckerZitatFree(ZitatToFree->nextZitat);
 	
+	if (ZitatToFree->prevZitat != NULL)
+		ZitatespuckerZitatFree(ZitatToFree->prevZitat);
+	
 	free((void *) ZitatToFree);
 
 	return;
