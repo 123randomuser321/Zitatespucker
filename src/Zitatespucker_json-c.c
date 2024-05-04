@@ -115,11 +115,14 @@ ZitatespuckerZitat *ZitatespuckerJSONGetZitatAllFromFile(const char *filename) {
 		if (ret != NULL) {
 			size_t i = 1;
 			ZitatespuckerZitat *cur = ret;
+			ZitatespuckerZitat *prev;
 			for ( ; i < len; i++) {
 				cur->nextZitat = ZitatespuckerJSONGetZitatSingle(ZitatArray, i);
-				if (cur->nextZitat != NULL)
+				if (cur->nextZitat != NULL) {
+					prev = cur;
 					cur = cur->nextZitat;
-				else
+					cur->prevZitat = prev;
+				} else
 					break;
 			}
 		}
