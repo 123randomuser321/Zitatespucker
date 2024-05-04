@@ -78,6 +78,7 @@ void ZitatespuckerZitatFree(ZitatespuckerZitat *ZitatToFree);
 
 /*
 	Returns the number of entries in the linked list ZitatList.
+	This check both ways! (prevZitat and nextZitat)
 	
 	0 if passed a NULL pointer.
 */
