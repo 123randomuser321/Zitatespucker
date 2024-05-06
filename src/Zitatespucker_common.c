@@ -92,10 +92,11 @@ size_t ZitatespuckerZitatListLen(ZitatespuckerZitat *ZitatList) {
 	
 	size_t ret = 1;
 
-	while ((ZitatList = ZitatList->nextZitat) != NULL)
+	ZitatespuckerZitat *ZitatListPrev = ZitatList;
+	while ((ZitatListPrev = ZitatListPrev->prevZitat) != NULL)
 		ret++;
-	
-	while ((ZitatList = ZitatList->prevZitat) != NULL)
+
+	while ((ZitatList = ZitatList->nextZitat) != NULL)
 		ret++;
 	
 	return ret;
