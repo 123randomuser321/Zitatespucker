@@ -77,15 +77,53 @@ void ZitatespuckerZitatFree(ZitatespuckerZitat *ZitatToFree) {
 		free((void *) ZitatToFree->zitat);
 	
 	if (ZitatToFree->nextZitat != NULL)
-		ZitatespuckerZitatFree(ZitatToFree->nextZitat);
+		ZitatespuckerZitatFreeNextOnly(ZitatToFree->nextZitat);
 	
 	if (ZitatToFree->prevZitat != NULL)
-		ZitatespuckerZitatFree(ZitatToFree->prevZitat);
+		ZitatespuckerZitatFreePrevOnly(ZitatToFree->prevZitat);
 	
 	free((void *) ZitatToFree);
 
 	return;
 
+}
+
+void ZitatespuckerZitatFreeNextOnly(ZitatespuckerZitat *ZitatToFree)
+{
+	if (ZitatToFree == NULL)
+		return;
+
+	if (ZitatToFree->author != NULL)
+		free((void *) ZitatToFree->author);
+	
+	if (ZitatToFree->zitat != NULL)
+		free((void *) ZitatToFree->zitat);
+	
+	if (ZitatToFree->nextZitat != NULL)
+		ZitatespuckerZitatFreeNextOnly(ZitatToFree->nextZitat);
+	
+	free ((void *) ZitatToFree);
+
+	return;
+}
+
+void ZitatespuckerZitatFreePrevOnly(ZitatespuckerZitat *ZitatToFree)
+{
+	if (ZitatToFree == NULL)
+		return;
+
+	if (ZitatToFree->author != NULL)
+		free((void *) ZitatToFree->author);
+	
+	if (ZitatToFree->zitat != NULL)
+		free((void *) ZitatToFree->zitat);
+	
+	if (ZitatToFree->prevZitat != NULL)
+		ZitatespuckerZitatFreePrevOnly(ZitatToFree->prevZitat);
+	
+	free ((void *) ZitatToFree);
+
+	return;
 }
 
 size_t ZitatespuckerZitatListLen(ZitatespuckerZitat *ZitatList) {

@@ -77,6 +77,18 @@ void ZitatespuckerZitatInit(ZitatespuckerZitat *ZitatToInit);
 void ZitatespuckerZitatFree(ZitatespuckerZitat *ZitatToFree);
 
 /*
+	free a ZitatespuckerZitat linked list, only following the nextZitat pointer
+	This function doesn't care for the length of the list and will work even on just one element.
+*/
+void ZitatespuckerZitatFreeNextOnly(ZitatespuckerZitat *ZitatToFree);
+
+/*
+	free a ZitatespuckerZitat linked list, only following the prevZitat pointer
+	This function doesn't care for the length of the list and will work even on just one element.
+*/
+void ZitatespuckerZitatFreePrevOnly(ZitatespuckerZitat *ZitatToFree);
+
+/*
 	Returns the number of entries in the linked list ZitatList.
 	This check both ways! (prevZitat and nextZitat)
 	
