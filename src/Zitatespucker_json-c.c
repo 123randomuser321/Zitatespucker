@@ -77,8 +77,8 @@ static inline int32_t ZitatespuckerJSONGetInt(json_object *Parent, const char *k
 
 /* Externally callable */
 
-size_t ZitatespuckerJSONGetAmountFromFile(const char *filename) {
-
+size_t ZitatespuckerJSONGetAmountFromFile(const char *filename)
+{
 	json_object *ZitatArray;
 	if ((ZitatArray = ZitatespuckerJSONGetZitatArrayFromFile(filename)) == NULL)
 		return 0;
@@ -87,11 +87,10 @@ size_t ZitatespuckerJSONGetAmountFromFile(const char *filename) {
 		json_object_put(ZitatArray);
 		return ret;
 	}
-
 }
 
-ZitatespuckerZitat *ZitatespuckerJSONGetZitatSingleFromFile(const char *filename, const size_t idx) {
-
+ZitatespuckerZitat *ZitatespuckerJSONGetZitatSingleFromFile(const char *filename, const size_t idx)
+{
 	json_object *ZitatArray;
 	if ((ZitatArray = ZitatespuckerJSONGetZitatArrayFromFile(filename)) == NULL)
 		return NULL;
@@ -100,11 +99,10 @@ ZitatespuckerZitat *ZitatespuckerJSONGetZitatSingleFromFile(const char *filename
 		json_object_put(ZitatArray);
 		return ret;
 	}
-
 }
 
-ZitatespuckerZitat *ZitatespuckerJSONGetZitatAllFromFile(const char *filename) {
-
+ZitatespuckerZitat *ZitatespuckerJSONGetZitatAllFromFile(const char *filename)
+{
 	json_object *ZitatArray;
 	if ((ZitatArray = ZitatespuckerJSONGetZitatArrayFromFile(filename)) == NULL)
 		return NULL;
@@ -129,14 +127,13 @@ ZitatespuckerZitat *ZitatespuckerJSONGetZitatAllFromFile(const char *filename) {
 		json_object_put(ZitatArray);
 		return ret;
 	}
-
 }
 
 
 /* Static function definitions */
 
-static json_object *ZitatespuckerJSONGetZitatArrayFromFile(const char *filename) {
-
+static json_object *ZitatespuckerJSONGetZitatArrayFromFile(const char *filename)
+{
 	json_object *globalscope;
 	if ((globalscope = json_object_from_file(filename)) == NULL) {
 		(void) fprintf(stderr, "%s:%d:%s: json_object_from_file() failed:\n%s", __FILE__, __LINE__, __func__, json_util_get_last_err());
@@ -153,11 +150,10 @@ static json_object *ZitatespuckerJSONGetZitatArrayFromFile(const char *filename)
 		json_object_put(globalscope);
 		return ZitatArray;
 	}
-
 }
 
-static ZitatespuckerZitat *ZitatespuckerJSONGetZitatSingle(json_object *ZitatArray, const size_t idx) {
-
+static ZitatespuckerZitat *ZitatespuckerJSONGetZitatSingle(json_object *ZitatArray, const size_t idx)
+{
 	json_object *ZitatObj = json_object_array_get_idx(ZitatArray, idx);
 	if (ZitatObj != NULL) {
 		ZitatespuckerZitat *ret = ZitatespuckerJSONGetPopulatedStruct(ZitatObj);
@@ -166,11 +162,10 @@ static ZitatespuckerZitat *ZitatespuckerJSONGetZitatSingle(json_object *ZitatArr
 		(void) fprintf(stderr, "%s:%d:%s: json_object_array_get_idx() returned NULL, wrong index?\n", __FILE__, __LINE__, __func__);
 		return NULL;
 	}
-
 }
 
-static ZitatespuckerZitat *ZitatespuckerJSONGetPopulatedStruct(json_object *ZitatObj) {
-
+static ZitatespuckerZitat *ZitatespuckerJSONGetPopulatedStruct(json_object *ZitatObj)
+{
 	ZitatespuckerZitat *Zitat;
 	if ((Zitat = (ZitatespuckerZitat *) malloc(sizeof(ZitatespuckerZitat))) == NULL) {
 		(void) fprintf(stderr, "%s:%d:%s: malloc() returned NULL.\n", __FILE__, __LINE__, __func__);
@@ -217,11 +212,10 @@ static ZitatespuckerZitat *ZitatespuckerJSONGetPopulatedStruct(json_object *Zita
 	}
 
 	return Zitat;
-
 }
 
-static inline char *ZitatespuckerJSONGetStringAllocated(json_object *Parent, const char *keyName, json_object *child) {
-
+static inline char *ZitatespuckerJSONGetStringAllocated(json_object *Parent, const char *keyName, json_object *child)
+{
 	if (json_object_object_get_ex(Parent, keyName, &child)) {
 		size_t len;
 		if ((len = json_object_get_string_len(child)) != 0) {
@@ -233,11 +227,10 @@ static inline char *ZitatespuckerJSONGetStringAllocated(json_object *Parent, con
 		(void) fprintf(stderr, "%s:%d:%s: Key \"%s\" not found.\n", __FILE__, __LINE__, __func__, keyName);
 		return NULL;
 	}
-
 }
 
-static inline int32_t ZitatespuckerJSONGetInt(json_object *Parent, const char *keyName, json_object *child) {
-
+static inline int32_t ZitatespuckerJSONGetInt(json_object *Parent, const char *keyName, json_object *child)
+{
 	if (json_object_object_get_ex(Parent, keyName, &child)) {
 		errno = 0; // reset errno to prevent false positive
 		int32_t tmpInt = json_object_get_int(child);
@@ -250,5 +243,4 @@ static inline int32_t ZitatespuckerJSONGetInt(json_object *Parent, const char *k
 		(void) fprintf(stderr, "%s:%d:%s: Key \"%s\" not found.\n", __FILE__, __LINE__, __func__, keyName);
 		return 0;
 	}
-
 }

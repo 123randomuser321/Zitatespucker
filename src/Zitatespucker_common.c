@@ -35,8 +35,8 @@
 
 /* Common functions */
 
-void ZitatespuckerGetVersion(uint8_t *major, uint8_t *minor, uint8_t *patch) {
-
+void ZitatespuckerGetVersion(uint8_t *major, uint8_t *minor, uint8_t *patch)
+{
 	if (major != NULL)
 		*major = ZITATESPUCKER_VERSION_MAJOR;
 	
@@ -47,11 +47,10 @@ void ZitatespuckerGetVersion(uint8_t *major, uint8_t *minor, uint8_t *patch) {
 		*patch = ZITATESPUCKER_VERSION_PATCH;
 	
 	return;
-
 }
 
-void ZitatespuckerZitatInit(ZitatespuckerZitat *ZitatToInit) {
-
+void ZitatespuckerZitatInit(ZitatespuckerZitat *ZitatToInit)
+{
 	ZitatToInit->author = NULL;
 	ZitatToInit->zitat = NULL;
 	ZitatToInit->day = 0;
@@ -62,11 +61,10 @@ void ZitatespuckerZitatInit(ZitatespuckerZitat *ZitatToInit) {
 	ZitatToInit->prevZitat = NULL;
 
 	return;
-
 }
 
-void ZitatespuckerZitatFree(ZitatespuckerZitat *ZitatToFree) {
-
+void ZitatespuckerZitatFree(ZitatespuckerZitat *ZitatToFree)
+{
 	if (ZitatToFree == NULL)
 		return;
 
@@ -85,7 +83,6 @@ void ZitatespuckerZitatFree(ZitatespuckerZitat *ZitatToFree) {
 	free((void *) ZitatToFree);
 
 	return;
-
 }
 
 void ZitatespuckerZitatFreeNextOnly(ZitatespuckerZitat *ZitatToFree)
@@ -126,8 +123,8 @@ void ZitatespuckerZitatFreePrevOnly(ZitatespuckerZitat *ZitatToFree)
 	return;
 }
 
-size_t ZitatespuckerZitatListLen(ZitatespuckerZitat *ZitatList) {
-	
+size_t ZitatespuckerZitatListLen(ZitatespuckerZitat *ZitatList)
+{
 	if (ZitatList == NULL)
 		return 0;
 	
@@ -141,5 +138,4 @@ size_t ZitatespuckerZitatListLen(ZitatespuckerZitat *ZitatList) {
 		ret++;
 	
 	return ret;
-
 }
