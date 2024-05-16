@@ -177,16 +177,16 @@ static ZitatespuckerZitat *ZitatespuckerJSONGetPopulatedStruct(json_object *Zita
 	json_object *tmpObj = NULL;
 
 	// author
-	Zitat->author = ZitatespuckerJSONGetStringAllocated(ZitatObj, AUTHOR, tmpObj);
+	Zitat->author = ZitatespuckerJSONGetStringAllocated(ZitatObj, ZITATESPUCKERZITATAUTHOR, tmpObj);
 
 	// zitat
-	Zitat->zitat = ZitatespuckerJSONGetStringAllocated(ZitatObj, ZITAT, tmpObj);
+	Zitat->zitat = ZitatespuckerJSONGetStringAllocated(ZitatObj, ZITATESPUCKERZITATZITAT, tmpObj);
 
 	// comment
-	Zitat->comment = ZitatespuckerJSONGetStringAllocated(ZitatObj, COMMENT, tmpObj);
+	Zitat->comment = ZitatespuckerJSONGetStringAllocated(ZitatObj, ZITATESPUCKERZITATCOMMENT, tmpObj);
 
 	// day
-	int32_t tmpInt = ZitatespuckerJSONGetInt(ZitatObj, DAY, tmpObj);
+	int32_t tmpInt = ZitatespuckerJSONGetInt(ZitatObj, ZITATESPUCKERZITATDAY, tmpObj);
 	if (tmpInt < 0)
 		tmpInt = 0;
 	else if (tmpInt > UINT8_MAX)
@@ -194,7 +194,7 @@ static ZitatespuckerZitat *ZitatespuckerJSONGetPopulatedStruct(json_object *Zita
 	Zitat->day = (uint8_t) tmpInt;
 
 	// month
-	tmpInt = ZitatespuckerJSONGetInt(ZitatObj, MONTH, tmpObj);
+	tmpInt = ZitatespuckerJSONGetInt(ZitatObj, ZITATESPUCKERZITATMONTH, tmpObj);
 	if (tmpInt < 0)
 		tmpInt = 0;
 	else if (tmpInt > UINT8_MAX)
@@ -202,7 +202,7 @@ static ZitatespuckerZitat *ZitatespuckerJSONGetPopulatedStruct(json_object *Zita
 	Zitat->month = (uint8_t) tmpInt;
 
 	// year
-	tmpInt = ZitatespuckerJSONGetInt(ZitatObj, YEAR, tmpObj);
+	tmpInt = ZitatespuckerJSONGetInt(ZitatObj, ZITATESPUCKERZITATYEAR, tmpObj);
 	if (tmpInt < 0)
 		tmpInt = 0;
 	else if (tmpInt > UINT16_MAX)
@@ -210,7 +210,7 @@ static ZitatespuckerZitat *ZitatespuckerJSONGetPopulatedStruct(json_object *Zita
 	Zitat->year = (uint16_t) tmpInt;
 
 	// annodomini
-	if (json_object_object_get_ex(ZitatObj, ANNODOMINI, &tmpObj)) {
+	if (json_object_object_get_ex(ZitatObj, ZITATESPUCKERZITATANNODOMINI, &tmpObj)) {
 		Zitat->annodomini = json_object_get_boolean(tmpObj);
 	}
 

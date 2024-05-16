@@ -29,13 +29,13 @@
 
 /* Key names for the ZitatespuckerZitat arrays within a .json */
 #define ZITATESPUCKERZITATKEYNAME 		"ZitatespuckerZitat"
-#define AUTHOR							"author"
-#define ZITAT							"zitat"
-#define COMMENT							"comment"
-#define DAY								"day"
-#define MONTH							"month"
-#define YEAR							"year"
-#define ANNODOMINI						"annodomini"
+#define ZITATESPUCKERZITATAUTHOR		"author"
+#define ZITATESPUCKERZITATZITAT			"zitat"
+#define ZITATESPUCKERZITATCOMMENT		"comment"
+#define ZITATESPUCKERZITATDAY			"day"
+#define ZITATESPUCKERZITATMONTH			"month"
+#define ZITATESPUCKERZITATYEAR			"year"
+#define ZITATESPUCKERZITATANNODOMINI	"annodomini"
 
 
 /* The Zitat */
