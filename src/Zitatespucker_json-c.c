@@ -182,6 +182,9 @@ static ZitatespuckerZitat *ZitatespuckerJSONGetPopulatedStruct(json_object *Zita
 	// zitat
 	Zitat->zitat = ZitatespuckerJSONGetStringAllocated(ZitatObj, ZITAT, tmpObj);
 
+	// comment
+	Zitat->comment = ZitatespuckerJSONGetStringAllocated(ZitatObj, COMMENT, tmpObj);
+
 	// day
 	int32_t tmpInt = ZitatespuckerJSONGetInt(ZitatObj, DAY, tmpObj);
 	if (tmpInt < 0)

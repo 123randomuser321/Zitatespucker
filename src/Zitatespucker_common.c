@@ -87,6 +87,9 @@ void ZitatespuckerZitatFreeNextOnly(ZitatespuckerZitat *ZitatToFree)
 	if (ZitatToFree->zitat != NULL)
 		free((void *) ZitatToFree->zitat);
 	
+	if (ZitatToFree->comment != NULL)
+		free((void *) ZitatToFree->comment);
+	
 	if (ZitatToFree->nextZitat != NULL)
 		ZitatespuckerZitatFreeNextOnly(ZitatToFree->nextZitat);
 	
@@ -105,6 +108,9 @@ void ZitatespuckerZitatFreePrevOnly(ZitatespuckerZitat *ZitatToFree)
 	
 	if (ZitatToFree->zitat != NULL)
 		free((void *) ZitatToFree->zitat);
+	
+	if (ZitatToFree->comment != NULL)
+		free((void *) ZitatToFree->comment);
 	
 	if (ZitatToFree->prevZitat != NULL)
 		ZitatespuckerZitatFreePrevOnly(ZitatToFree->prevZitat);

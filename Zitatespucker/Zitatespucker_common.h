@@ -31,6 +31,7 @@
 #define ZITATESPUCKERZITATKEYNAME 		"ZitatespuckerZitat"
 #define AUTHOR							"author"
 #define ZITAT							"zitat"
+#define COMMENT							"comment"
 #define DAY								"day"
 #define MONTH							"month"
 #define YEAR							"year"
@@ -41,7 +42,7 @@
 typedef struct ZitatespuckerZitat {
 	char *author; /* Author of the quote */
 	char *zitat; /* The quote itself */
-	//char *comment; /* A comment on the quote */
+	char *comment; /* A comment on the quote */
 	uint8_t day; /* Day of origin */
 	uint8_t month; /* Month of origin */
 	uint16_t year; /* Year of origin; if this is 0 and anoodomini is false, this value is considered invalid */
