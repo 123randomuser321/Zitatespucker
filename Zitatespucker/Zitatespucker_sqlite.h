@@ -54,7 +54,7 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFile(const char *filename);
     
     This function allocates, and the given object/objects must be freed with ZitatespuckerZitatFree().
 */
-ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllByAuthor(const char *filename, const char *authorname);
+//ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllByAuthor(const char *filename, const char *authorname);
 
 /*
 	Returns a pointer to the first element in a linked list, filtered by the given date information.
@@ -66,7 +66,7 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllByAuthor(const char *filename, co
     
     This function allocates, and the given object/objects must be freed with ZitatespuckerZitatFree().
 */
-ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllByDate(const char *filename, uint8_t year, uint8_t month, uint8_t day);
+//ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllByDate(const char *filename, uint8_t year, uint8_t month, uint8_t day);
 
 
 #endif
