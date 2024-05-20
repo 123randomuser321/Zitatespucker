@@ -58,7 +58,7 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllByAuthor(const char *filename, co
 	The date information is parsed in the order year->month->day,
 	becoming more restrictive as it goes.
 	month and day are optional, year is not.
-	0 is considered an invalid value, and results in a NULL return.
+	0 is considered an invalid value, and passing year as zero results in a NULL return.
     
     This function allocates, and the given object/objects must be freed with ZitatespuckerZitatFree().
 */
