@@ -35,6 +35,9 @@
 
 size_t ZitatespuckerSQLGetAmountFromFile(const char *filename)
 {
+	// perhaps one could replace this using a SQL COUNT statement
+	// but as of now, this is on par with the JSON backend
+	
 	sqlite3 *db;
 	size_t ret = 0;
 
