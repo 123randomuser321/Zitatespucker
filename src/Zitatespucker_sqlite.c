@@ -19,5 +19,47 @@
 */
 
 
+/* Standard headers */
+#include <stdio.h>
+
+
+/* SQLite headers */
+#include <sqlite3.h>
+
+
 /* Internal headers */
 #include "Zitatespucker/Zitatespucker_sqlite.h"
+
+
+/* Externally callable */
+
+size_t ZitatespuckerSQLGetAmountFromFile(const char *filename)
+{
+	sqlite3 *db;
+	size_t ret = 0;
+
+	if (sqlite3_open_v2(filename, &db, SQLITE_OPEN_READONLY, NULL) != SQLITE_OK) {
+		(void) fprintf(stderr, "%s:%d:%s: sqlite3_open_v2() failed:\n%s", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+		return ret;
+	}
+
+	sqlite3_stmt *statement;
+	if (sqlite3_prepare_v2(db, "SELECT * FROM ZitatespuckerZitat", -1, &statement, NULL) != SQLITE_OK) {
+		(void) fprintf(stderr, "%s:%d:%s: sqlite3_prepare_v2() failed:\n%s", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+		sqlite3_close(db);
+		return ret;
+	}
+
+	// finally, we can start counting
+	// if I am understanding the docs correctly
+	// also, this doesn't properly communicate an error :(
+	while (sqlite3_step(statement) == SQLITE_ROW)
+		ret++;
+	
+	// but this should
+	if (sqlite3_finalize(statement) != SQLITE_OK)
+		(void) fprintf(stderr, "%s:%d:%s: sqlite3_finalize() reported an error:\n%s", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+	sqlite3_close(db);
+
+	return ret;
+}

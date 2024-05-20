@@ -29,9 +29,13 @@
 #include "Zitatespucker/Zitatespucker_common.h"
 
 
+/* Externally callable */
+
 /*
-    Returns the number of rows within the ZitatespuckerZitat table
+    Returns the number of rows within the ZitatespuckerZitat table.
     0 if none or an error occured.
+
+    Note that the reported amount may differ from the amount of usable rows (ones that actually contain data).
 */
 size_t ZitatespuckerSQLGetAmountFromFile(const char *filename);
 
