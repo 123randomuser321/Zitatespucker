@@ -34,6 +34,8 @@
 /*
 	Returns the number of ZitatespuckerZitat elements within a given filename (aka array length).
 	0 if none or an error occured.
+
+	Note that the returned number may differ from the number of usable elements (i.e. empty ones are counted, too).
 */
 size_t ZitatespuckerJSONGetAmountFromFile(const char *filename);
 
