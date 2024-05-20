@@ -31,6 +31,17 @@
 #include "Zitatespucker/Zitatespucker_sqlite.h"
 
 
+/* Static function declarations */
+
+/*
+	Populate a ZitatespuckerZitat struct the prepared SQL statement ZitatStmt and return it.
+	NULL on error.
+	
+	This function allocates, and the given object must be freed with ZitatespuckerZitatFree().
+*/
+static ZitatespuckerZitat *ZitatespuckerSQLGetPopulatedStruct(sqlite3_stmt *ZitatStmt);
+
+
 /* Externally callable */
 
 size_t ZitatespuckerSQLGetAmountFromFile(const char *filename)
@@ -62,7 +73,49 @@ size_t ZitatespuckerSQLGetAmountFromFile(const char *filename)
 	// but this should
 	if (sqlite3_finalize(statement) != SQLITE_OK)
 		(void) fprintf(stderr, "%s:%d:%s: sqlite3_finalize() reported an error:\n%s", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
-	sqlite3_close(db);
+	(void) sqlite3_close(db);
 
 	return ret;
 }
+
+ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFile(const char *filename)
+{
+	sqlite3 *db;
+
+	if (sqlite3_open_v2(filename, &db, SQLITE_OPEN_READONLY, NULL) != SQLITE_OK) {
+		(void) fprintf(stderr, "%s:%d:%s: sqlite3_open_v2() failed:\n%s", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+		return NULL;
+	}
+
+	sqlite3_stmt *statement;
+	if (sqlite3_prepare_v2(db, "SELECT * FROM ZitatespuckerZitat", -1, &statement, NULL) != SQLITE_OK) {
+		(void) fprintf(stderr, "%s:%d:%s: sqlite3_prepare_v2() failed:\n%s", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+		sqlite3_close(db);
+		return NULL;
+	}
+
+	ZitatespuckerZitat *ret = NULL;
+	ZitatespuckerZitat *cur;
+	
+	while (sqlite3_step(statement) == SQLITE_ROW) {
+		if (ret != NULL) {
+			cur->nextZitat = ZitatespuckerSQLGetPopulatedStruct(statement);
+			if (cur->nextZitat != NULL) {
+				cur->nextZitat->prevZitat = cur;
+				cur = cur->nextZitat;
+			}
+		} else {
+			ret = ZitatespuckerSQLGetPopulatedStruct(statement);
+			cur = ret;
+		}
+	}
+
+	if (sqlite3_finalize(statement) != SQLITE_OK)
+		(void) fprintf(stderr, "%s:%d:%s: sqlite3_finalize() reported an error:\n%s", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+	(void) sqlite3_close(db);
+
+	return ret;
+}
+
+
+/* Static function definitions */
