@@ -75,6 +75,15 @@ ifneq ($(ENABLE_JSON_C),)
 	objects += $(BUILDDIR)/Zitatespucker_json-c.o 
 endif
 
+ifneq ($(ENABLE_SQLITE),)
+	HEADERS += Zitatespucker/Zitatespucker_sqlite.h
+	CFLAGS += -D ZITATESPUCKER_FEATURE_SQLITE -fPIC
+	ifneq ($(ENABLE_SQLITE_STATIC),)
+		LDFLAGS += -Wl,-Bstatic
+	LDFLAGS += -lsqlite3 -fPIC
+	objects += $(BUILDDIR)/Zitatespucker_sqlite.o
+endif
+
 # todo: echoing (https://www.gnu.org/software/make/manual/html_node/Echoing.html)
 # https://www.gnu.org/prep/standards/html_node/Standard-Targets.html
 all : dynamic static
@@ -94,9 +103,15 @@ $(BUILDDIR)/Zitatespucker_json-c.o : src/Zitatespucker_json-c.c
 	-mkdir $(BUILDDIR)
 	$(CC) -c $(CFLAGS) $^ -o $@
 
+$(BUILDDIR)/Zitatespucker_sqlite.o : src/Zitatespucker_sqlite.c
+	-mkdir $(BUILDDIR)
+	$(CC) -c $(CFLAGS) $^ -o $@
+
 src/Zitatespucker_common.c : Zitatespucker/Zitatespucker_common.h
 
 src/Zitatespucker_json-c.c : Zitatespucker/Zitatespucker_json-c.h Zitatespucker/Zitatespucker_common.h
+
+src/Zitatespucker_sqlite.c : Zitatespucker/Zitatespucker_sqlite.h Zitatespucker/Zitatespucker_common.h
 
 install : install-headers install-dynamic install-static
 

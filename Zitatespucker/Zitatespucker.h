@@ -39,6 +39,10 @@
 	#include "Zitatespucker_json-c.h"
 #endif
 
-// TODO:
-// SQL (https://www.sqlite.org/)
+/* sqlite3 related things to read from SQL databases */
+#ifdef ZITATESPUCKER_FEATURE_SQLITE
+    #include "Zitatespucker_sqlite.h"
+#endif
+
+
 #endif
