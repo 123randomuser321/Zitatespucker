@@ -141,6 +141,14 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFile(const char *filename)
 
 ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByAuthor(const char *filename, const char *authorname)
 {
+	if (filename == NULL) {
+		(void) fprintf(stderr, "%s:%d:%s: recieved NULL filename!\n", __FILE__, __LINE__, __func__);
+		return NULL;
+	} else if (authorname == NULL) {
+		(void) fprintf(stderr, "%s:%d:%s: recieved NULL authorname!\n", __FILE__, __LINE__, __func__);
+		return NULL;
+	}
+
 	sqlite3 *db;
 
 	if (sqlite3_open_v2(filename, &db, SQLITE_OPEN_READONLY, NULL) != SQLITE_OK) {
