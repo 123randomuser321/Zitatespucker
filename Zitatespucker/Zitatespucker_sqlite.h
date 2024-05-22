@@ -23,6 +23,7 @@
 
 /* Standard headers */
 #include <stddef.h>
+#include <stdbool.h>
 
 
 /* Internal headers */
@@ -61,12 +62,12 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByAuthor(const char *file
     NULL on error. (Only finding one element in the file is not considered an error.)
 	The date information is parsed in the order year->month->day,
 	becoming more restrictive as it goes.
-	month and day are optional, year is not.
-	0 is considered an invalid value, and passing year as zero results in a NULL return.
+	month and day are optional, year and annodomini are not.
+	0 is considered an invalid value; passing year as zero and annodomini as false in considered invalid, and results in NULL.
     
     This function allocates, and the given object/objects must be freed with ZitatespuckerZitatFree().
 */
-//ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllByDate(const char *filename, uint8_t year, uint8_t month, uint8_t day);
+//ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByDate(const char *filename, bool annodomini, uint16_t year, uint8_t month, uint8_t day);
 
 
 #endif
