@@ -54,5 +54,5 @@ int main(int argc, char **argv)
 	assert(ZitatespuckerJSONGetZitatAllFromFile("../testfile_noarray.json") == NULL);
 	printf("OKAY!\n\n\n");
 
-	printf("ALL CHECKS PASSED!\n");
+	printf("ALL CHECKS PASSED!\n\n\n\n\n");
 }
