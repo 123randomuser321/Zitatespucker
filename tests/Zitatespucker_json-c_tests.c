@@ -29,8 +29,8 @@
 #include "Zitatespucker/Zitatespucker.h"
 
 
-int main(int argc, char **argv) {
-
+int main(int argc, char **argv)
+{
 	printf("ZitatespuckerJSONGetAmountFromFile:\n");
 	printf("Checking whether an incorrect filename results in zero array size...\n");
 	assert(ZitatespuckerJSONGetAmountFromFile("wrongfilename.json") == 0);
@@ -55,5 +55,4 @@ int main(int argc, char **argv) {
 	printf("OKAY!\n\n\n");
 
 	printf("ALL CHECKS PASSED!\n");
-
 }
