@@ -149,6 +149,8 @@ clean :
 	-rm -rf tests/build
 
 check :
+	@echo "The tests assume that the library was built with all backends switched on."
+	@echo "Expect failures otherwise."
 	mkdir tests/build
 	$(CC) ./tests/Zitatespucker_json-c_tests.c -I. -L./$(BUILDDIR) -lZitatespucker -ljson-c -o ./tests/build/Zitatespucker_json-c_tests 
 	cd tests/build && ./Zitatespucker_json-c_tests
