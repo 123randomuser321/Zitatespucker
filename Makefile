@@ -153,4 +153,5 @@ check :
 	@echo "Expect failures otherwise."
 	mkdir tests/build
 	$(CC) ./tests/Zitatespucker_json-c_tests.c -I. -L./$(BUILDDIR) -lZitatespucker -ljson-c -o ./tests/build/Zitatespucker_json-c_tests 
-	cd tests/build && ./Zitatespucker_json-c_tests
+	$(CC) ./tests/Zitatespucker_sqlite_tests.c -I. -L./$(BUILDDIR) -lZitatespucker -lsqlite3 -o ./tests/build/Zitatespucker_sqlite_tests
+	cd tests/build && ./Zitatespucker_json-c_tests && ./Zitatespucker_sqlite_tests
