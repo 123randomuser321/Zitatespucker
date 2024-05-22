@@ -60,6 +60,11 @@ size_t ZitatespuckerSQLGetAmountFromFile(const char *filename)
 {
 	// perhaps one could replace this using a SQL COUNT statement
 	// but as of now, this is on par with the JSON backend
+
+	if (filename == NULL) {
+		(void) fprintf(stderr, "%s:%d:%s: recieved NULL filename!\n", __FILE__, __LINE__, __func__);
+		return 0;
+	}
 	
 	sqlite3 *db;
 	size_t ret = 0;
@@ -92,6 +97,11 @@ size_t ZitatespuckerSQLGetAmountFromFile(const char *filename)
 
 ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFile(const char *filename)
 {
+	if (filename == NULL) {
+		(void) fprintf(stderr, "%s:%d:%s: recieved NULL filename!\n", __FILE__, __LINE__, __func__);
+		return NULL;
+	}
+	
 	sqlite3 *db;
 
 	if (sqlite3_open_v2(filename, &db, SQLITE_OPEN_READONLY, NULL) != SQLITE_OK) {
@@ -180,11 +190,11 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByAuthor(const char *file
 ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByDate(const char *filename, bool annodomini, uint16_t year, uint8_t month, uint8_t day)
 {
 	if (year == 0 && annodomini == false) {
-		(void) fprintf(stderr, "%s:%d:%s: annodomini cannot be false when year is 0.", __FILE__, __LINE__, __func__);
+		(void) fprintf(stderr, "%s:%d:%s: annodomini cannot be false when year is 0.\n", __FILE__, __LINE__, __func__);
 		return NULL;
 	}
 	else if (day != 0 && month == 0) {
-		(void) fprintf(stderr, "%s:%d:%s: month cannot be 0 when day is not 0.", __FILE__, __LINE__, __func__);
+		(void) fprintf(stderr, "%s:%d:%s: month cannot be 0 when day is not 0.\n", __FILE__, __LINE__, __func__);
 		return NULL;
 	}
 	
