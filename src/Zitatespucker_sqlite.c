@@ -179,10 +179,14 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByAuthor(const char *file
 
 ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByDate(const char *filename, bool annodomini, uint16_t year, uint8_t month, uint8_t day)
 {
-	if (year == 0 && annodomini == false)
+	if (year == 0 && annodomini == false) {
+		(void) fprintf(stderr, "%s:%d:%s: annodomini cannot be false when year is 0.", __FILE__, __LINE__, __func__);
 		return NULL;
-	else if (day != 0 && month == 0)
+	}
+	else if (day != 0 && month == 0) {
+		(void) fprintf(stderr, "%s:%d:%s: month cannot be 0 when day is not 0.", __FILE__, __LINE__, __func__);
 		return NULL;
+	}
 	
 	sqlite3 *db;
 
