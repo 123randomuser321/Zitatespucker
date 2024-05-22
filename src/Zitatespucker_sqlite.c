@@ -263,7 +263,6 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByDate(const char *filena
 	}
 
 	// day
-	// month
 	if (day != 0) {
 		if (sqlite3_bind_int(statement, 4, day) != SQLITE_OK) {
 			(void) fprintf(stderr, "%s:%d:%s: sqlite3_bind_int() failed:\n%s", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
