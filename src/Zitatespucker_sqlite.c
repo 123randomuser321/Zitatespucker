@@ -177,6 +177,102 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByAuthor(const char *file
 	return ret;
 }
 
+ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByDate(const char *filename, bool annodomini, uint16_t year, uint8_t month, uint8_t day)
+{
+	if (year == 0 && annodomini == false)
+		return NULL;
+	else if (day != 0 && month == 0)
+		return NULL;
+	
+	sqlite3 *db;
+
+	if (sqlite3_open_v2(filename, &db, SQLITE_OPEN_READONLY, NULL) != SQLITE_OK) {
+		(void) fprintf(stderr, "%s:%d:%s: sqlite3_open_v2() failed:\n%s", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+		return NULL;
+	}
+
+	char *sSQL;
+	// determine what SQL query to use
+	if (day != 0)
+		sSQL = "SELECT * FROM ZitatespuckerZitat WHERE annodomini = ?1 AND year = ?2 AND month = ?3 AND day = ?4";
+	else if (month != 0)
+		sSQL = "SELECT * FROM ZitatespuckerZitat WHERE annodomini = ?1 AND year = ?2 AND month = ?3";
+	else
+		sSQL = "SELECT * FROM ZitatespuckerZitat WHERE annodomini = ?1 AND year = ?2";
+	
+	sqlite3_stmt *statement;
+	if (sqlite3_prepare_v2(db, sSQL, -1, &statement, NULL) != SQLITE_OK) {
+		(void) fprintf(stderr, "%s:%d:%s: sqlite3_prepare_v2() failed:\n%s", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+		sqlite3_close(db);
+		return NULL;
+	}
+
+	// insert everything
+	// annodomini
+	// I am not actually sure if SQLITE_TRANSIENT is correct in this place
+	if (sqlite3_bind_text(statement, 1, (annodomini ? "true" : "false"), -1, SQLITE_TRANSIENT) != SQLITE_OK) {
+		(void) fprintf(stderr, "%s:%d:%s: sqlite3_bind_int() failed:\n%s", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+		if (sqlite3_finalize(statement) != SQLITE_OK)
+			(void) fprintf(stderr, "%s:%d:%s: sqlite3_finalize() reported an error:\n%s", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+		sqlite3_close(db);
+		return NULL;
+	}
+
+	// year
+	if (sqlite3_bind_int(statement, 2, year) != SQLITE_OK) {
+		(void) fprintf(stderr, "%s:%d:%s: sqlite3_bind_int() failed:\n%s", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+		if (sqlite3_finalize(statement) != SQLITE_OK)
+			(void) fprintf(stderr, "%s:%d:%s: sqlite3_finalize() reported an error:\n%s", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+		sqlite3_close(db);
+		return NULL;
+	}
+
+	// month
+	if (month != 0) {
+		if (sqlite3_bind_int(statement, 3, month) != SQLITE_OK) {
+			(void) fprintf(stderr, "%s:%d:%s: sqlite3_bind_int() failed:\n%s", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+			if (sqlite3_finalize(statement) != SQLITE_OK)
+				(void) fprintf(stderr, "%s:%d:%s: sqlite3_finalize() reported an error:\n%s", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+			sqlite3_close(db);
+			return NULL;
+		}
+	}
+
+	// day
+	// month
+	if (day != 0) {
+		if (sqlite3_bind_int(statement, 4, day) != SQLITE_OK) {
+			(void) fprintf(stderr, "%s:%d:%s: sqlite3_bind_int() failed:\n%s", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+			if (sqlite3_finalize(statement) != SQLITE_OK)
+				(void) fprintf(stderr, "%s:%d:%s: sqlite3_finalize() reported an error:\n%s", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+			sqlite3_close(db);
+			return NULL;
+		}
+	}
+
+	ZitatespuckerZitat *ret = NULL;
+	ZitatespuckerZitat *cur;
+	
+	while (sqlite3_step(statement) == SQLITE_ROW) {
+		if (ret != NULL) {
+			cur->nextZitat = ZitatespuckerSQLGetPopulatedStruct(statement);
+			if (cur->nextZitat != NULL) {
+				cur->nextZitat->prevZitat = cur;
+				cur = cur->nextZitat;
+			}
+		} else {
+			ret = ZitatespuckerSQLGetPopulatedStruct(statement);
+			cur = ret;
+		}
+	}
+
+	if (sqlite3_finalize(statement) != SQLITE_OK)
+		(void) fprintf(stderr, "%s:%d:%s: sqlite3_finalize() reported an error:\n%s", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+	(void) sqlite3_close(db);
+
+	return ret;
+}
+
 
 /* Static function definitions */
 
