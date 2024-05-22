@@ -80,6 +80,7 @@ ifneq ($(ENABLE_SQLITE),)
 	CFLAGS += -D ZITATESPUCKER_FEATURE_SQLITE -fPIC
 	ifneq ($(ENABLE_SQLITE_STATIC),)
 		LDFLAGS += -Wl,-Bstatic
+	endif
 	LDFLAGS += -lsqlite3 -fPIC
 	objects += $(BUILDDIR)/Zitatespucker_sqlite.o
 endif
