@@ -53,7 +53,7 @@ ZITATESPUCKER_FEATURE_SQLITE for sqlite3
 You need simply #define them to enable the feature.
 
 Usage of the specific backends is described within their respective headers.
-Example files can be found within the examples directory.
+Example files can be found within the 'examples' directory.
 
 Then, pass -lZitatespucker to the linker, and you should be good.
 
