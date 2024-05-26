@@ -16,6 +16,12 @@ Currently, both JSON (via json-c) and SQL (via sqlite3) are supported.
 
 ## Building
 
+WARNING:
+Some compiler options seem to bork the library somehow.
+I am still in the process of figuring it out.
+(If you are using my Void templates,
+that is the reason you are getting I/O trap on calling ZitatespuckerZitatFree())
+
 A (GNU) Makefile is provided with the project.
 By default, the library has little functionality.
 
