@@ -1,0 +1,14 @@
+## License/Copying conditions
+
+This project is licensed the GNU LGPL 3.0-only,
+as specified in the file 'LICENSE.LGPL-3.0-only',
+except the directories 'examples', 'external', 'tests', and their respective contents.
+
+The directories 'examples' and 'tests' and their respective contents are licensed under
+the Zero-Clause BSD license, as specified within the file 'LICENSE.0BSD'.
+
+The directory 'external' contains files from external projects,
+and thus the licensing terms of the original external projects apply
+to the respective files.
+
+For the purpose of convenience, most files contain a license header.
