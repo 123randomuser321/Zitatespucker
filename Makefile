@@ -54,11 +54,11 @@ endif
 HEADERS = Zitatespucker/Zitatespucker.h Zitatespucker/Zitatespucker_common.h
 
 ifneq ($(DEBUG),)
-	CFLAGS += -g
-	CFLAGS += -Wpedantic
+	override CFLAGS += -g
+	override CFLAGS += -Wpedantic
 endif
 
-CFLAGS += -std=c99 -I. -D ZITATESPUCKER_VERSION_MAJOR=$(MAJOR) -D ZITATESPUCKER_VERSION_MINOR=$(MINOR) -D ZITATESPUCKER_VERSION_PATCH=$(PATCH)
+override CFLAGS += -std=c99 -I. -D ZITATESPUCKER_VERSION_MAJOR=$(MAJOR) -D ZITATESPUCKER_VERSION_MINOR=$(MINOR) -D ZITATESPUCKER_VERSION_PATCH=$(PATCH)
 
 objects = $(BUILDDIR)/Zitatespucker_common.o
 
@@ -66,21 +66,21 @@ objects = $(BUILDDIR)/Zitatespucker_common.o
 # gcc' manual recommends adding flags to both compiler and linker flags
 ifneq ($(ENABLE_JSON_C),)
 	HEADERS += Zitatespucker/Zitatespucker_json-c.h
-	CFLAGS += -D ZITATESPUCKER_FEATURE_JSON_C -fPIC
+	override CFLAGS += -D ZITATESPUCKER_FEATURE_JSON_C -fPIC
 	ifneq ($(ENABLE_JSON_C_STATIC),)
-		LDFLAGS += -Wl,-Bstatic
+		override LDFLAGS += -Wl,-Bstatic
 	endif
-	LDFLAGS += -ljson-c -fPIC
+	override LDFLAGS += -ljson-c -fPIC
 	objects += $(BUILDDIR)/Zitatespucker_json-c.o 
 endif
 
 ifneq ($(ENABLE_SQLITE),)
 	HEADERS += Zitatespucker/Zitatespucker_sqlite.h
-	CFLAGS += -D ZITATESPUCKER_FEATURE_SQLITE -fPIC
+	override CFLAGS += -D ZITATESPUCKER_FEATURE_SQLITE -fPIC
 	ifneq ($(ENABLE_SQLITE_STATIC),)
-		LDFLAGS += -Wl,-Bstatic
+		override LDFLAGS += -Wl,-Bstatic
 	endif
-	LDFLAGS += -lsqlite3 -fPIC
+	override LDFLAGS += -lsqlite3 -fPIC
 	objects += $(BUILDDIR)/Zitatespucker_sqlite.o
 endif
 
