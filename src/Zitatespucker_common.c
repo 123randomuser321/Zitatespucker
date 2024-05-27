@@ -52,6 +52,7 @@ void ZitatespuckerZitatInit(ZitatespuckerZitat *ZitatToInit)
 {
 	ZitatToInit->author = NULL;
 	ZitatToInit->zitat = NULL;
+	ZitatToInit->comment = NULL;
 	ZitatToInit->day = 0;
 	ZitatToInit->month = 0;
 	ZitatToInit->year = 0;
@@ -77,44 +78,50 @@ void ZitatespuckerZitatFree(ZitatespuckerZitat *ZitatToFree)
 
 void ZitatespuckerZitatFreeNextOnly(ZitatespuckerZitat *ZitatToFree)
 {
-	if (ZitatToFree == NULL)
-		return;
+	ZitatespuckerZitat *next;
 
-	if (ZitatToFree->author != NULL)
-		free((void *) ZitatToFree->author);
-	
-	if (ZitatToFree->zitat != NULL)
-		free((void *) ZitatToFree->zitat);
-	
-	if (ZitatToFree->comment != NULL)
-		free((void *) ZitatToFree->comment);
-	
-	if (ZitatToFree->nextZitat != NULL)
-		ZitatespuckerZitatFreeNextOnly(ZitatToFree->nextZitat);
-	
-	free ((void *) ZitatToFree);
+	while (ZitatToFree != NULL) {
+		if (ZitatToFree->author != NULL)
+			free((void *) ZitatToFree->author);
+
+		if (ZitatToFree->zitat != NULL)
+			free((void *) ZitatToFree->zitat);
+
+		if (ZitatToFree->comment != NULL)
+			free((void *) ZitatToFree->comment);
+		
+		if (ZitatToFree->nextZitat != NULL) {
+			next = ZitatToFree->nextZitat;
+			free((void *) ZitatToFree);
+			ZitatToFree = next;
+		} else
+			break;
+	}
 
 	return;
 }
 
 void ZitatespuckerZitatFreePrevOnly(ZitatespuckerZitat *ZitatToFree)
 {
-	if (ZitatToFree == NULL)
-		return;
+	ZitatespuckerZitat *prev;
 
-	if (ZitatToFree->author != NULL)
-		free((void *) ZitatToFree->author);
-	
-	if (ZitatToFree->zitat != NULL)
-		free((void *) ZitatToFree->zitat);
-	
-	if (ZitatToFree->comment != NULL)
-		free((void *) ZitatToFree->comment);
-	
-	if (ZitatToFree->prevZitat != NULL)
-		ZitatespuckerZitatFreePrevOnly(ZitatToFree->prevZitat);
-	
-	free ((void *) ZitatToFree);
+	while (ZitatToFree != NULL) {
+		if (ZitatToFree->author != NULL)
+			free((void *) ZitatToFree->author);
+
+		if (ZitatToFree->zitat != NULL)
+			free((void *) ZitatToFree->zitat);
+
+		if (ZitatToFree->comment != NULL)
+			free((void *) ZitatToFree->comment);
+		
+		if (ZitatToFree->prevZitat != NULL) {
+			prev = ZitatToFree->prevZitat;
+			free((void *) ZitatToFree);
+			ZitatToFree = prev;
+		} else
+			break;
+	}
 
 	return;
 }
