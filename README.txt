@@ -29,6 +29,8 @@ The following switches are recognized:
 'ENABLE_SQLITE' (when set, builds and links the sqlite3 backend)
 'ENABLE_SQLITE_STATIC' (when set, link sqlite3 statically)
 
+If you are building on Windows, do not forget to pass the correct include and link directories via CFLAGS and LDFLAGS.
+
 
 ## Dependencies
 
