@@ -347,7 +347,7 @@ static ZitatespuckerZitat *ZitatespuckerSQLGetPopulatedStruct(sqlite3_stmt *Zita
 	if (bytelen != 5)
 		Zitat->annodomini = false;
 	else {
-		const unsigned char *tmpS = sqlite3_column_text(ZitatStmt, 6);
+		const char *tmpS = (char *) sqlite3_column_text(ZitatStmt, 6);
 		if (tmpS == NULL) // only on OOM
 			Zitat->annodomini = false;
 		else if (strncmp(tmpS, "true", 5) == 0)
@@ -365,7 +365,7 @@ static inline char *ZitatespuckerSQLGetStringAllocated(sqlite3_stmt *ZitatStmt, 
 	if (bytelen == 0)
 		return NULL;
 	
-	const unsigned char *tmpS = sqlite3_column_text(ZitatStmt, iCol);
+	const char *tmpS = (char *) sqlite3_column_text(ZitatStmt, iCol);
 	if (tmpS == NULL) // happens only on OOM, theoretically
 		return NULL;
 	
