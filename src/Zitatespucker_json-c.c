@@ -222,7 +222,8 @@ static inline char *ZitatespuckerJSONGetStringAllocated(json_object *Parent, con
 		size_t len;
 		if ((len = json_object_get_string_len(child)) >= 0) {
 			char *tmpS = malloc(len + 1);
-			strcpy(tmpS, json_object_get_string(child));
+			if (tmpS != NULL)
+				strcpy(tmpS, json_object_get_string(child));
 			return tmpS;
 		}
 	} else {
