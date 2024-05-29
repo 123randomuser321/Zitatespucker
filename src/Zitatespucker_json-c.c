@@ -225,7 +225,8 @@ static inline char *ZitatespuckerJSONGetStringAllocated(json_object *Parent, con
 			if (tmpS != NULL)
 				strcpy(tmpS, json_object_get_string(child));
 			return tmpS;
-		}
+		} else
+			return NULL;
 	} else {
 		(void) fprintf(stderr, "%s:%d:%s: Key \"%s\" not found.\n", __FILE__, __LINE__, __func__, keyName);
 		return NULL;
