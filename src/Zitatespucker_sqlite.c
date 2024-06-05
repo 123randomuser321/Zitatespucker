@@ -48,7 +48,7 @@ static ZitatespuckerZitat *ZitatespuckerSQLGetPopulatedStruct(sqlite3_stmt *Zita
 	Get the string content of column iCol from prepared statement ZitatStmt.
 
 	NULL may be a valid return.
-	This function duplicates the string and check for proper NULL-termination.
+	This function duplicates the string and checks for proper NULL-termination.
 */
 static inline char *ZitatespuckerSQLGetStringAllocated(sqlite3_stmt *ZitatStmt, int iCol);
 
