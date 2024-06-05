@@ -1,5 +1,7 @@
 /*
-	Zitatespucker: Library to spit out quotes (and relating information)
+	SPDX-License-Identifier: LGPL-3.0-only
+    
+    Zitatespucker: Library to spit out quotes (and relating information)
 	Core (header)
 
     Copyright (C) 2024  Sembo Sadur <labmailssadur@gmail.com>

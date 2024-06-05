@@ -1,4 +1,6 @@
 /*
+	SPDX-License-Identifier: LGPL-3.0-only
+	
 	Zitatespucker: Library to spit out quotes (and relating information)
 	Interface with json-c to read from .json files (header)
 

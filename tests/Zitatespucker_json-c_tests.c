@@ -1,4 +1,6 @@
 /*
+	SPDX-License-Identifier: 0BSD
+	
 	Zitatespucker: Library to spit out quotes (and relating information)
 	Interface with json-c to read from .json files (Tests)
 

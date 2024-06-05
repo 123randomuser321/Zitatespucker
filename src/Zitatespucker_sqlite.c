@@ -1,4 +1,6 @@
 /*
+	SPDX-License-Identifier: LGPL-3.0-only
+	
 	Zitatespucker: Library to spit out quotes (and relating information)
 	Interface with sqlite to read from SQL-files
 
