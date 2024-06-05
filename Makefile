@@ -1,21 +1,18 @@
-#	SPDX-License-Identifier: LGPL-3.0-only
+#	SPDX-License-Identifier: 0BSD
 #
 #	Zitatespucker: Library to spit out quotes (and relating information)
 #	Makefile
 #
-#	Copyright (C) 2024  Sembo Sadur <labmailssadur@gmail.com>
+#	Copyright (C) 2024 by Sembo Sadur <labmailssadur@gmail.com>
+#	
+#	Permission to use, copy, modify, and/or distribute this software
+#	for any purpose with or without fee is hereby granted.
 #
-#   This program is free software: you can redistribute it and/or modify
-#   it under the terms of the GNU Lesser General Public License version 3,
-#	as published by the Free Software Foundation.
-#
-#   This program is distributed in the hope that it will be useful,
-#   but WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#   GNU General Public License for more details.
-#
-#   You should have received a copy of the GNU General Public License
-#   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#	THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+#	WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS.
+#	IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES
+#	OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
+#	NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 .PHONY : all dynamic static install install-headers install-dynamic install-static uninstall uninstall-headers uninstall-dynamic uninstall-static clean check
 
