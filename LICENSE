@@ -5,8 +5,8 @@ as specified in the file 'licenses/LICENSE.LGPL-3.0-only',
 except the directories 'examples', 'external', 'licenses', 'tests', and their respective contents,
 and the Makefile.
 
-The directories 'examples' and 'tests' and their respective contents are licensed under
-the Zero-Clause BSD license, as specified within the file 'licenses/LICENSE.0BSD'.
+The directories 'examples' and 'tests' and their respective contents, and the Makefile
+are licensed under the Zero-Clause BSD license, as specified within the file 'licenses/LICENSE.0BSD'.
 
 The directory 'external' contains files from external projects,
 and thus the licensing terms of the original external projects apply
