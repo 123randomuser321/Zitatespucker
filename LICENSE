@@ -1,6 +1,6 @@
 ## License/Copying conditions
 
-This project is licensed the GNU LGPL 3.0-only,
+This project is licensed under the GNU LGPL 3.0-only,
 as specified in the file 'licenses/LICENSE.LGPL-3.0-only',
 except the directories 'examples', 'external', 'licenses', 'tests', and their respective contents,
 and the Makefile.
