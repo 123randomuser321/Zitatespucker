@@ -59,6 +59,10 @@ endif
 
 override CFLAGS += -std=c99 -I. -D ZITATESPUCKER_VERSION_MAJOR=$(MAJOR) -D ZITATESPUCKER_VERSION_MINOR=$(MINOR) -D ZITATESPUCKER_VERSION_PATCH=$(PATCH)
 
+ifneq ($(NOPRINT),)
+	override CFLAGS += -D ZITATESPUCKER_NOPRINT=1
+endif
+
 objects = $(BUILDDIR)/Zitatespucker_common.o
 
 # -fPIC needs to be added due to the build failing with "relocation R_X86_64_PC32 against symbol `stderr@@GLIBC_2.2.5' can not be used when making a shared object" otherwise

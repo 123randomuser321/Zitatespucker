@@ -137,13 +137,17 @@ static json_object *ZitatespuckerJSONGetZitatArrayFromFile(const char *filename)
 {
 	json_object *globalscope;
 	if ((globalscope = json_object_from_file(filename)) == NULL) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: json_object_from_file() failed:\n%s", __FILE__, __LINE__, __func__, json_util_get_last_err());
+		#endif
 		return NULL;
 	}
 
 	json_object *ZitatArray;
 	if (!json_object_object_get_ex(globalscope, ZITATESPUCKERZITATKEYNAME, &ZitatArray)) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: json_object_object_get_ex() failed:\nKey does not exist.\n", __FILE__, __LINE__, __func__);
+		#endif
 		json_object_put(globalscope);
 		return NULL;
 	} else {
@@ -160,7 +164,9 @@ static ZitatespuckerZitat *ZitatespuckerJSONGetZitatSingle(json_object *ZitatArr
 		ZitatespuckerZitat *ret = ZitatespuckerJSONGetPopulatedStruct(ZitatObj);
 		return ret;
 	} else {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: json_object_array_get_idx() returned NULL, wrong index?\n", __FILE__, __LINE__, __func__);
+		#endif
 		return NULL;
 	}
 }
@@ -169,7 +175,9 @@ static ZitatespuckerZitat *ZitatespuckerJSONGetPopulatedStruct(json_object *Zita
 {
 	ZitatespuckerZitat *Zitat;
 	if ((Zitat = (ZitatespuckerZitat *) malloc(sizeof(ZitatespuckerZitat))) == NULL) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: malloc() returned NULL.\n", __FILE__, __LINE__, __func__);
+		#endif
 		return NULL;
 	}
 	// init
@@ -230,7 +238,9 @@ static inline char *ZitatespuckerJSONGetStringAllocated(json_object *Parent, con
 		} else
 			return NULL;
 	} else {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: Key \"%s\" not found.\n", __FILE__, __LINE__, __func__, keyName);
+		#endif
 		return NULL;
 	}
 }
@@ -241,12 +251,16 @@ static inline int32_t ZitatespuckerJSONGetInt(json_object *Parent, const char *k
 		errno = 0; // reset errno to prevent false positive
 		int32_t tmpInt = json_object_get_int(child);
 		if (errno == EINVAL) {
+			#ifndef ZITATESPUCKER_NOPRINT
 			(void) fprintf(stderr, "%s:%d:%s: No valid conversion for key \"%s\".\n", __FILE__, __LINE__, __func__, keyName);
+			#endif
 			errno = 0; // and reset again, to prevent false positives down the line
 		}
 		return tmpInt;
 	} else {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: Key \"%s\" not found.\n", __FILE__, __LINE__, __func__, keyName);
+		#endif
 		return 0;
 	}
 }

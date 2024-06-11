@@ -24,6 +24,7 @@ The following switches are recognized:
 'DESTDIR' and 'PREFIX' (when set, control behavior of the 'install' and 'uninstall' targets)
 'TARGET=win32' (which tries a crossbuild for Windows, best used on something like MSYS)
 'DEBUG' (when set, passes '-g' and '-Wpedantic' to the compiler)
+'ZITATESPUCKER_NOPRINT' (when set, the library will never fprintf by itself)
 'ENABLE_JSON_C' (when set, builds and links the json-c backend)
 'ENABLE_JSON_C_STATIC' (when set, link json-c statically)
 'ENABLE_SQLITE' (when set, builds and links the sqlite3 backend)

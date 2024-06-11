@@ -63,7 +63,9 @@ size_t ZitatespuckerSQLGetAmountFromFile(const char *filename)
 	// but as of now, this is on par with the JSON backend
 
 	if (filename == NULL) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: recieved NULL filename!\n", __FILE__, __LINE__, __func__);
+		#endif
 		return 0;
 	}
 	
@@ -71,13 +73,17 @@ size_t ZitatespuckerSQLGetAmountFromFile(const char *filename)
 	size_t ret = 0;
 
 	if (sqlite3_open_v2(filename, &db, SQLITE_OPEN_READONLY, NULL) != SQLITE_OK) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: sqlite3_open_v2() failed:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+		#endif
 		return ret;
 	}
 
 	sqlite3_stmt *statement;
 	if (sqlite3_prepare_v2(db, "SELECT * FROM ZitatespuckerZitat", -1, &statement, NULL) != SQLITE_OK) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: sqlite3_prepare_v2() failed:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+		#endif
 		sqlite3_close(db);
 		return ret;
 	}
@@ -89,8 +95,11 @@ size_t ZitatespuckerSQLGetAmountFromFile(const char *filename)
 		ret++;
 	
 	// but this should
-	if (sqlite3_finalize(statement) != SQLITE_OK)
+	if (sqlite3_finalize(statement) != SQLITE_OK) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: sqlite3_finalize() reported an error:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+		#endif
+	}
 	(void) sqlite3_close(db);
 
 	return ret;
@@ -99,20 +108,26 @@ size_t ZitatespuckerSQLGetAmountFromFile(const char *filename)
 ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFile(const char *filename)
 {
 	if (filename == NULL) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: recieved NULL filename!\n", __FILE__, __LINE__, __func__);
+		#endif
 		return NULL;
 	}
 	
 	sqlite3 *db;
 
 	if (sqlite3_open_v2(filename, &db, SQLITE_OPEN_READONLY, NULL) != SQLITE_OK) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: sqlite3_open_v2() failed:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+		#endif
 		return NULL;
 	}
 
 	sqlite3_stmt *statement;
 	if (sqlite3_prepare_v2(db, "SELECT * FROM ZitatespuckerZitat", -1, &statement, NULL) != SQLITE_OK) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: sqlite3_prepare_v2() failed:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+		#endif
 		sqlite3_close(db);
 		return NULL;
 	}
@@ -133,8 +148,11 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFile(const char *filename)
 		}
 	}
 
-	if (sqlite3_finalize(statement) != SQLITE_OK)
+	if (sqlite3_finalize(statement) != SQLITE_OK) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: sqlite3_finalize() reported an error:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+		#endif
+	}
 	(void) sqlite3_close(db);
 
 	return ret;
@@ -143,32 +161,45 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFile(const char *filename)
 ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByAuthor(const char *filename, const char *authorname)
 {
 	if (filename == NULL) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: recieved NULL filename!\n", __FILE__, __LINE__, __func__);
+		#endif
 		return NULL;
 	} else if (authorname == NULL) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: recieved NULL authorname!\n", __FILE__, __LINE__, __func__);
+		#endif
 		return NULL;
 	}
 
 	sqlite3 *db;
 
 	if (sqlite3_open_v2(filename, &db, SQLITE_OPEN_READONLY, NULL) != SQLITE_OK) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: sqlite3_open_v2() failed:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+		#endif
 		return NULL;
 	}
 
 	sqlite3_stmt *statement;
 	if (sqlite3_prepare_v2(db, "SELECT * FROM ZitatespuckerZitat WHERE author=?1", -1, &statement, NULL) != SQLITE_OK) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: sqlite3_prepare_v2() failed:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+		#endif
 		sqlite3_close(db);
 		return NULL;
 	}
 
 	// insert the author into the query
 	if (sqlite3_bind_text(statement, 1, authorname, -1, SQLITE_STATIC) != SQLITE_OK) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: sqlite3_bind_text() failed:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
-		if (sqlite3_finalize(statement) != SQLITE_OK)
+		#endif
+		if (sqlite3_finalize(statement) != SQLITE_OK) {
+			#ifndef ZITATESPUCKER_NOPRINT
 			(void) fprintf(stderr, "%s:%d:%s: sqlite3_finalize() reported an error:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+			#endif
+		}
 		sqlite3_close(db);
 		return NULL;
 	}
@@ -189,8 +220,11 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByAuthor(const char *file
 		}
 	}
 
-	if (sqlite3_finalize(statement) != SQLITE_OK)
+	if (sqlite3_finalize(statement) != SQLITE_OK) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: sqlite3_finalize() reported an error:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+		#endif
+	}
 	(void) sqlite3_close(db);
 
 	return ret;
@@ -199,20 +233,28 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByAuthor(const char *file
 ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByDate(const char *filename, bool annodomini, uint16_t year, uint8_t month, uint8_t day)
 {
 	if (filename == NULL) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: recieved NULL filename!\n", __FILE__, __LINE__, __func__);
+		#endif
 		return NULL;
 	} else if (year == 0 && annodomini == false) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: annodomini cannot be false when year is 0.\n", __FILE__, __LINE__, __func__);
+		#endif
 		return NULL;
 	} else if (day != 0 && month == 0) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: month cannot be 0 when day is not 0.\n", __FILE__, __LINE__, __func__);
+		#endif
 		return NULL;
 	}
 	
 	sqlite3 *db;
 
 	if (sqlite3_open_v2(filename, &db, SQLITE_OPEN_READONLY, NULL) != SQLITE_OK) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: sqlite3_open_v2() failed:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+		#endif
 		return NULL;
 	}
 
@@ -227,7 +269,9 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByDate(const char *filena
 	
 	sqlite3_stmt *statement;
 	if (sqlite3_prepare_v2(db, sSQL, -1, &statement, NULL) != SQLITE_OK) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: sqlite3_prepare_v2() failed:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+		#endif
 		sqlite3_close(db);
 		return NULL;
 	}
@@ -236,18 +280,28 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByDate(const char *filena
 	// annodomini
 	// I am not actually sure if SQLITE_TRANSIENT is correct in this place
 	if (sqlite3_bind_text(statement, 1, (annodomini ? "true" : "false"), -1, SQLITE_TRANSIENT) != SQLITE_OK) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: sqlite3_bind_int() failed:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
-		if (sqlite3_finalize(statement) != SQLITE_OK)
+		#endif
+		if (sqlite3_finalize(statement) != SQLITE_OK) {
+			#ifndef ZITATESPUCKER_NOPRINT
 			(void) fprintf(stderr, "%s:%d:%s: sqlite3_finalize() reported an error:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+			#endif
+		}
 		sqlite3_close(db);
 		return NULL;
 	}
 
 	// year
 	if (sqlite3_bind_int(statement, 2, year) != SQLITE_OK) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: sqlite3_bind_int() failed:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
-		if (sqlite3_finalize(statement) != SQLITE_OK)
+		#endif
+		if (sqlite3_finalize(statement) != SQLITE_OK) {
+			#ifndef ZITATESPUCKER_NOPRINT
 			(void) fprintf(stderr, "%s:%d:%s: sqlite3_finalize() reported an error:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+			#endif
+		}
 		sqlite3_close(db);
 		return NULL;
 	}
@@ -255,9 +309,14 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByDate(const char *filena
 	// month
 	if (month != 0) {
 		if (sqlite3_bind_int(statement, 3, month) != SQLITE_OK) {
+			#ifndef ZITATESPUCKER_NOPRINT
 			(void) fprintf(stderr, "%s:%d:%s: sqlite3_bind_int() failed:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
-			if (sqlite3_finalize(statement) != SQLITE_OK)
+			#endif
+			if (sqlite3_finalize(statement) != SQLITE_OK) {
+				#ifndef ZITATESPUCKER_NOPRINT
 				(void) fprintf(stderr, "%s:%d:%s: sqlite3_finalize() reported an error:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+				#endif
+			}
 			sqlite3_close(db);
 			return NULL;
 		}
@@ -266,9 +325,14 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByDate(const char *filena
 	// day
 	if (day != 0) {
 		if (sqlite3_bind_int(statement, 4, day) != SQLITE_OK) {
+			#ifndef ZITATESPUCKER_NOPRINT
 			(void) fprintf(stderr, "%s:%d:%s: sqlite3_bind_int() failed:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
-			if (sqlite3_finalize(statement) != SQLITE_OK)
+			#endif
+			if (sqlite3_finalize(statement) != SQLITE_OK) {
+				#ifndef ZITATESPUCKER_NOPRINT
 				(void) fprintf(stderr, "%s:%d:%s: sqlite3_finalize() reported an error:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+				#endif
+			}
 			sqlite3_close(db);
 			return NULL;
 		}
@@ -290,8 +354,11 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByDate(const char *filena
 		}
 	}
 
-	if (sqlite3_finalize(statement) != SQLITE_OK)
+	if (sqlite3_finalize(statement) != SQLITE_OK) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: sqlite3_finalize() reported an error:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+		#endif
+	}
 	(void) sqlite3_close(db);
 
 	return ret;
@@ -305,7 +372,9 @@ static ZitatespuckerZitat *ZitatespuckerSQLGetPopulatedStruct(sqlite3_stmt *Zita
 	// mucho importante: SQLite type coercion table
 	ZitatespuckerZitat *Zitat;
 	if ((Zitat = (ZitatespuckerZitat *) malloc(sizeof(ZitatespuckerZitat))) == NULL) {
+		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: malloc() returned NULL.\n", __FILE__, __LINE__, __func__);
+		#endif
 		return NULL;
 	}
 	// init
