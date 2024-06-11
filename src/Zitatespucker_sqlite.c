@@ -84,7 +84,7 @@ size_t ZitatespuckerSQLGetAmountFromFile(const char *filename)
 		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: sqlite3_prepare_v2() failed:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
 		#endif
-		sqlite3_close(db);
+		(void) sqlite3_close(db);
 		return ret;
 	}
 
@@ -128,7 +128,7 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFile(const char *filename)
 		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: sqlite3_prepare_v2() failed:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
 		#endif
-		sqlite3_close(db);
+		(void) sqlite3_close(db);
 		return NULL;
 	}
 
@@ -186,7 +186,7 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByAuthor(const char *file
 		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: sqlite3_prepare_v2() failed:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
 		#endif
-		sqlite3_close(db);
+		(void) sqlite3_close(db);
 		return NULL;
 	}
 
@@ -200,7 +200,7 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByAuthor(const char *file
 			(void) fprintf(stderr, "%s:%d:%s: sqlite3_finalize() reported an error:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
 			#endif
 		}
-		sqlite3_close(db);
+		(void) sqlite3_close(db);
 		return NULL;
 	}
 
@@ -272,7 +272,7 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByDate(const char *filena
 		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: sqlite3_prepare_v2() failed:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
 		#endif
-		sqlite3_close(db);
+		(void) sqlite3_close(db);
 		return NULL;
 	}
 
@@ -288,7 +288,7 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByDate(const char *filena
 			(void) fprintf(stderr, "%s:%d:%s: sqlite3_finalize() reported an error:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
 			#endif
 		}
-		sqlite3_close(db);
+		(void) sqlite3_close(db);
 		return NULL;
 	}
 
@@ -302,7 +302,7 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByDate(const char *filena
 			(void) fprintf(stderr, "%s:%d:%s: sqlite3_finalize() reported an error:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
 			#endif
 		}
-		sqlite3_close(db);
+		(void) sqlite3_close(db);
 		return NULL;
 	}
 
@@ -317,7 +317,7 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByDate(const char *filena
 				(void) fprintf(stderr, "%s:%d:%s: sqlite3_finalize() reported an error:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
 				#endif
 			}
-			sqlite3_close(db);
+			(void) sqlite3_close(db);
 			return NULL;
 		}
 	}
@@ -333,7 +333,7 @@ ZitatespuckerZitat *ZitatespuckerSQLGetZitatAllFromFileByDate(const char *filena
 				(void) fprintf(stderr, "%s:%d:%s: sqlite3_finalize() reported an error:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
 				#endif
 			}
-			sqlite3_close(db);
+			(void) sqlite3_close(db);
 			return NULL;
 		}
 	}
