@@ -47,6 +47,26 @@ static json_t *ZitatespuckerJSONGetZitatArrayFromFile(const char *filename);
 */
 static ZitatespuckerZitat *ZitatespuckerJSONGetZitatSingle(json_t *ZitatArray, const size_t idx);
 
+/*
+	Populate a ZitatespuckerZitat struct with the information within ZitatObj and return it.
+	NULL on error.
+	
+	This function allocates, and the given object must be freed with ZitatespuckerZitatFree().
+*/
+static ZitatespuckerZitat *ZitatespuckerJSONGetPopulatedStruct(json_t *ZitatObj);
+
+/*
+	Return the string content of key keyName within json object Parent.
+
+	NULL on error.
+*/
+static inline char *ZitatespuckerJSONGetStringAllocated(json_t *Parent, const char *keyName);
+
+/*
+	Return the integer content of key keyName within json object Parent.
+*/
+static inline json_int_t ZitatespuckerJSONGetInt(json_t *Parent, const char *keyName);
+
 
 /* Externally callable */
 
@@ -65,12 +85,12 @@ size_t ZitatespuckerJSONGetAmountFromFile(const char *filename)
 
 ZitatespuckerZitat *ZitatespuckerJSONGetZitatSingleFromFile(const char *filename, const size_t idx)
 {
-	json_t *zitatscope = ZitatespuckerJSONGetZitatArrayFromFile(filename);
-	if (zitatscope == NULL)
+	json_t *ZitatArray = ZitatespuckerJSONGetZitatArrayFromFile(filename);
+	if (ZitatArray == NULL)
 		return NULL;
 	else {
-		ZitatespuckerZitat *ret = ZitatespuckerJSONGetZitatSingle(zitatscope, idx);
-		json_decref(zitatscope);
+		ZitatespuckerZitat *ret = ZitatespuckerJSONGetZitatSingle(ZitatArray, idx);
+		json_decref(ZitatArray);
 		return ret;
 	}
 }
@@ -152,5 +172,93 @@ static ZitatespuckerZitat *ZitatespuckerJSONGetZitatSingle(json_t *ZitatArray, c
 		(void) fprintf(stderr, "%s:%d:%s: json_array_get() returned NULL, wrong index?\n", __FILE__, __LINE__, __func__);
 		#endif
 		return NULL;
+	}
+}
+
+static ZitatespuckerZitat *ZitatespuckerJSONGetPopulatedStruct(json_t *ZitatObj)
+{
+	ZitatespuckerZitat *Zitat;
+	if ((Zitat = (ZitatespuckerZitat *) malloc(sizeof(ZitatespuckerZitat))) == NULL) {
+		#ifndef ZITATESPUCKER_NOPRINT
+		(void) fprintf(stderr, "%s:%d:%s: malloc() returned NULL.\n", __FILE__, __LINE__, __func__);
+		#endif
+		return NULL;
+	}
+	// init
+	ZitatespuckerZitatInit(Zitat);
+
+	// author
+	Zitat->author = ZitatespuckerJSONGetStringAllocated(ZitatObj, ZITATESPUCKERZITATAUTHOR);
+
+	// zitat
+	Zitat->zitat = ZitatespuckerJSONGetStringAllocated(ZitatObj, ZITATESPUCKERZITATZITAT);
+
+	// comment
+	Zitat->comment = ZitatespuckerJSONGetStringAllocated(ZitatObj, ZITATESPUCKERZITATCOMMENT);
+
+	// day
+	json_int_t tmpInt = ZitatespuckerJSONGetInt(ZitatObj, ZITATESPUCKERZITATDAY);
+	if (tmpInt < 0)
+		tmpInt = 0;
+	else if (tmpInt > UINT8_MAX)
+		tmpInt = UINT8_MAX;
+	Zitat->day = (uint8_t) tmpInt;
+
+	// month
+	tmpInt = ZitatespuckerJSONGetInt(ZitatObj, ZITATESPUCKERZITATMONTH);
+	if (tmpInt < 0)
+		tmpInt = 0;
+	else if (tmpInt > UINT8_MAX)
+		tmpInt = UINT8_MAX;
+	Zitat->month = (uint8_t) tmpInt;
+
+	// year
+	tmpInt = ZitatespuckerJSONGetInt(ZitatObj, ZITATESPUCKERZITATYEAR);
+	if (tmpInt < 0)
+		tmpInt = 0;
+	else if (tmpInt > UINT16_MAX)
+		tmpInt = UINT16_MAX;
+	Zitat->year = (uint16_t) tmpInt;
+
+	// annodomini
+	json_t *tmpBool = json_object_get(ZitatObj, ZITATESPUCKERZITATANNODOMINI);
+	if (tmpBool != NULL) {
+		Zitat->annodomini = (json_is_true(tmpBool) ? true : false);
+	}
+
+	return Zitat;
+}
+
+static inline char *ZitatespuckerJSONGetStringAllocated(json_t *Parent, const char *keyName)
+{
+	json_t *child = json_object_get(Parent, keyName);
+	if (child != NULL) {
+		size_t len;
+		if ((len = json_string_length(child)) >= 1) {
+			char *tmpS = malloc(len);
+			if (tmpS != NULL)
+				strcpy(tmpS, json_string_value(child));
+			return tmpS;
+		} else
+			return NULL;
+	} else {
+		#ifndef ZITATESPUCKER_NOPRINT
+		(void) fprintf(stderr, "%s:%d:%s: Key \"%s\" not found.\n", __FILE__, __LINE__, __func__, keyName);
+		#endif
+		return NULL;
+	}
+}
+
+static inline json_int_t ZitatespuckerJSONGetInt(json_t *Parent, const char *keyName)
+{
+	json_t *child = json_object_get(Parent, keyName);
+	if (child != NULL) {
+		json_int_t tmpInt = json_integer_value(child);
+		return tmpInt;
+	} else {
+		#ifndef ZITATESPUCKER_NOPRINT
+		(void) fprintf(stderr, "%s:%d:%s: Key \"%s\" not found.\n", __FILE__, __LINE__, __func__, keyName);
+		#endif
+		return 0;
 	}
 }
