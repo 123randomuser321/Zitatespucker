@@ -22,6 +22,11 @@
 #define ZITATESPUCKER_H
 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 #ifdef __STDC_VERSION__
 	#if __STDC_VERSION__ < 199901L
 		#error "Compiler doesn't seem C99-compliant."
@@ -50,6 +55,11 @@
 /* sqlite3 related things to read from SQL databases */
 #ifdef ZITATESPUCKER_FEATURE_SQLITE
     #include "Zitatespucker_sqlite.h"
+#endif
+
+
+#ifdef __cplusplus
+}
 #endif
 
 
