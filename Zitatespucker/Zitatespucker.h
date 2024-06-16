@@ -40,20 +40,13 @@ extern "C" {
 #include "Zitatespucker_common.h"
 
 
-/* json-c related things to read from .json files */
-#ifdef ZITATESPUCKER_FEATURE_JSON_C
-    #define ZITATESPUCKER_HAS_JSON
-	#include "Zitatespucker_json-c.h"
+/* json related things to read from .json files */
+#ifdef ZITATESPUCKER_JSON
+	#include "Zitatespucker_json.h"
 #endif
 
-/* jansson related things to read from .json files */
-#if defined (ZITATESPUCKER_FEATURE_JANSSON) && !defined (ZITATESPUCKER_HAS_JSON)
-    #define ZITATESPUCKER_HAS_JSON
-	#include "Zitatespucker_jansson.h"
-#endif
-
-/* sqlite3 related things to read from SQL databases */
-#ifdef ZITATESPUCKER_FEATURE_SQLITE
+/* SQL related things to read from SQL databases */
+#ifdef ZITATESPUCKER_SQL
     #include "Zitatespucker_sqlite.h"
 #endif
 

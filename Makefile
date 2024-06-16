@@ -68,28 +68,28 @@ objects = $(BUILDDIR)/Zitatespucker_common.o
 # -fPIC needs to be added due to the build failing with "relocation R_X86_64_PC32 against symbol `stderr@@GLIBC_2.2.5' can not be used when making a shared object" otherwise
 # gcc' manual recommends adding flags to both compiler and linker flags
 ifneq ($(ENABLE_JSON_C),)
-	HEADERS += Zitatespucker/Zitatespucker_json-c.h
-	override CFLAGS += -D ZITATESPUCKER_FEATURE_JSON_C -fPIC
+	HEADERS += Zitatespucker/Zitatespucker_json.h
+	override CFLAGS += -D ZITATESPUCKER_JSON -D ZITATESPUCKER_FEATURE_JSON_C -fPIC
 	ifneq ($(ENABLE_JSON_C_STATIC),)
 		override LDFLAGS += -Wl,-Bstatic
 	endif
 	override LDFLAGS += -ljson-c -fPIC
-	objects += $(BUILDDIR)/Zitatespucker_json-c.o 
+	objects += $(BUILDDIR)/Zitatespucker_json-c.o
 endif
 
 ifneq ($(ENABLE_JANSSON),)
-	HEADERS += Zitatespucker/Zitatespucker_jansson.h
-	override CFLAGS += -D ZITATESPUCKER_FEATURE_JANSSON -fPIC
+	HEADERS += Zitatespucker/Zitatespucker_json.h
+	override CFLAGS += -D ZITATESPUCKER_JSON -fPIC
 	ifneq ($(ENABLE_JANSSON_STATIC),)
 		override LDFLAGS += -Wl,-Bstatic
 	endif
 	override LDFLAGS += -ljansson -fPIC
-	objects += $(BUILDDIR)/Zitatespucker_jansson.o 
+	objects += $(BUILDDIR)/Zitatespucker_jansson.o
 endif
 
 ifneq ($(ENABLE_SQLITE),)
 	HEADERS += Zitatespucker/Zitatespucker_sqlite.h
-	override CFLAGS += -D ZITATESPUCKER_FEATURE_SQLITE -fPIC
+	override CFLAGS += -D ZITATESPUCKER_SQL -fPIC
 	ifneq ($(ENABLE_SQLITE_STATIC),)
 		override LDFLAGS += -Wl,-Bstatic
 	endif
@@ -126,9 +126,9 @@ $(BUILDDIR)/Zitatespucker_sqlite.o : src/Zitatespucker_sqlite.c
 
 src/Zitatespucker_common.c : Zitatespucker/Zitatespucker_common.h
 
-src/Zitatespucker_json-c.c : Zitatespucker/Zitatespucker_json-c.h Zitatespucker/Zitatespucker_common.h
+src/Zitatespucker_json-c.c : Zitatespucker/Zitatespucker_json.h Zitatespucker/Zitatespucker_common.h
 
-src/Zitatespucker_jansson.c : Zitatespucker/Zitatespucker_jansson.h Zitatespucker/Zitatespucker_common.h
+src/Zitatespucker_jansson.c : Zitatespucker/Zitatespucker_json.h Zitatespucker/Zitatespucker_common.h
 
 src/Zitatespucker_sqlite.c : Zitatespucker/Zitatespucker_sqlite.h Zitatespucker/Zitatespucker_common.h
 

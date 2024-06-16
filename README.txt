@@ -11,7 +11,9 @@ Month of utterance
 Year of utterance
 Whether or not it happened BC or AD
 
-Currently, both JSON (via json-c) and SQL (via sqlite3) are supported.
+The library currently supports:
+JSON (aka .json files); via json-c or jansson
+SQL files; via sqlite3
 
 
 ## Building
@@ -27,10 +29,14 @@ The following switches are recognized:
 'NOPRINT' (when set, the library will never fprintf by itself)
 'ENABLE_JSON_C' (when set, builds and links the json-c backend)
 'ENABLE_JSON_C_STATIC' (when set, link json-c statically)
+'ENABLE_JANSSON' (when set, builds and links the jansson backend)
+'ENABLE_JANSSON_STATIC' (when set, link jansson statically)
 'ENABLE_SQLITE' (when set, builds and links the sqlite3 backend)
 'ENABLE_SQLITE_STATIC' (when set, link sqlite3 statically)
 
 If you are building on Windows, do not forget to pass the correct include and link directories via CFLAGS and LDFLAGS.
+
+WARNING: Enabling more than one backend for a file format will fail to build (linker will complain about duplicate symbols).
 
 
 ## Dependencies
@@ -39,21 +45,22 @@ Build:
 gcc (or any syntactically identical compiler)
 libc
 json-c (only if ENABLE_JSON_C is set)
+jansson (only if ENABLE_JANSSON is set)
 sqlite3 (only if ENABLE_SQLITE is set)
 
 Runtime:
 libc
 json-c (only if ENABLE_JSON_C is set)
+jansson (only if ENABLE_JANSSON is set)
 sqlite3 (only if ENABLE_SQLITE is set)
 
 
 ## Usage
 
-Each of the backends is controlled via a preprocessor definition:
-ZITATESPUCKER_FEATURE_JSON_C for json-c
-ZITATESPUCKER_FEATURE_SQLITE for sqlite3
-
-You need simply #define them to enable the feature.
+The core library is more or less a no-op.
+For use of specific backends, please define the following preprocessor definitions:
+'ZITATESPUCKER_JSON' for JSON stuff
+'ZITATESPUCKER_SQL' for SQL stuff
 
 Usage of the specific backends is described within their respective headers.
 Example files can be found within the 'examples' directory.
@@ -66,4 +73,4 @@ Then, pass -lZitatespucker to the linker, and you should be good.
 Run 'make check' after you built the library.
 
 Friendly warning:
-The 'check' target expects the library to be built with all backends enabled, and parts will fail otherwise.
+The 'check' target expects the library to be built with a backend for each possible file format enabled, and parts will fail otherwise.

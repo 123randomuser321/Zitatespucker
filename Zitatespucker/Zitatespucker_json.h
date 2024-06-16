@@ -2,7 +2,7 @@
 	SPDX-License-Identifier: LGPL-3.0-only
 	
 	Zitatespucker: Library to spit out quotes (and relating information)
-	Interface with jansson to read from .json files (header)
+	Interface with json-c to read from .json files (header)
 
 	Copyright (C) 2024  Sembo Sadur <labmailssadur@gmail.com>
 
@@ -18,8 +18,8 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#ifndef ZITATESPUCKER_JANSSON_H
-#define ZITATESPUCKER_JANSSON_H
+#ifndef ZITATESPUCKER_JSON_H
+#define ZITATESPUCKER_JSON_H
 
 
 /* Standard headers */
@@ -56,6 +56,12 @@ ZitatespuckerZitat *ZitatespuckerJSONGetZitatSingleFromFile(const char *filename
 	This function allocates, and the given object/objects must be freed with ZitatespuckerZitatFree().
 */
 ZitatespuckerZitat *ZitatespuckerJSONGetZitatAllFromFile(const char *filename);
+
+// TODO:
+// Filter functions:
+// ZitatespuckerZitat *ZitatespuckerJSONGetZitatAllBy* where * is Author, Year, etc
+// function for retrieving from a series of .json files? (link lists together)
+// fprintf calls: check for error (perror)
 
 
 #endif
