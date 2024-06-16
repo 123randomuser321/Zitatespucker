@@ -140,3 +140,17 @@ static json_t *ZitatespuckerJSONGetZitatArrayFromFile(const char *filename)
 
 	return zitatscope;
 }
+
+static ZitatespuckerZitat *ZitatespuckerJSONGetZitatSingle(json_t *ZitatArray, const size_t idx)
+{
+	json_t *ZitatObj = json_array_get(ZitatArray, idx);
+	if (ZitatObj != NULL) {
+		ZitatespuckerZitat *ret = ZitatespuckerJSONGetPopulatedStruct(ZitatObj);
+		return ret;
+	} else {
+		#ifndef ZITATESPUCKER_NOPRINT
+		(void) fprintf(stderr, "%s:%d:%s: json_array_get() returned NULL, wrong index?\n", __FILE__, __LINE__, __func__);
+		#endif
+		return NULL;
+	}
+}
