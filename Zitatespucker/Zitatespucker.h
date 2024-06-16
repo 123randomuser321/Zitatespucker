@@ -37,7 +37,14 @@
 
 /* json-c related things to read from .json files */
 #ifdef ZITATESPUCKER_FEATURE_JSON_C
+    #define ZITATESPUCKER_HAS_JSON
 	#include "Zitatespucker_json-c.h"
+#endif
+
+/* jansson related things to read from .json files */
+#if defined (ZITATESPUCKER_FEATURE_JANSSON) && !defined (ZITATESPUCKER_HAS_JSON)
+    #define ZITATESPUCKER_HAS_JSON
+	#include "Zitatespucker_jansson.h"
 #endif
 
 /* sqlite3 related things to read from SQL databases */
