@@ -20,6 +20,10 @@
 */
 
 
+/* Standard headers */
+#include <string.h>
+
+
 /* jansson headers */
 #include <jansson.h>
 
