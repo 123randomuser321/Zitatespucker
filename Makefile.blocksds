@@ -24,9 +24,7 @@ export BLOCKSDSEXT		?= /opt/blocksds/external
 export WONDERFUL_TOOLCHAIN	?= /opt/wonderful
 ARM_NONE_EABI_PATH	?= $(WONDERFUL_TOOLCHAIN)/toolchain/gcc-arm-none-eabi/bin/
 
-MAJOR = 2
-MINOR = 0
-PATCH = 0
+include Makefile.defs
 
 # Source code paths
 # -----------------

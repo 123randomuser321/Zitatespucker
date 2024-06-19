@@ -20,9 +20,7 @@
 # todo: windows
 BUILDDIR = build
 
-MAJOR = 2
-MINOR = 0
-PATCH = 0
+include Makefile.defs
 
 ifeq ($(DESTDIR),)
 	DESTDIR = $(BUILDDIR)
