@@ -39,6 +39,15 @@ If you are building on Windows, do not forget to pass the correct include and li
 WARNING: Enabling more than one backend for a file format will fail to build (linker will complain about duplicate symbols).
 
 
+## Building for Nintendo DS (static library)
+
+Invoke make using the 'Makefile.blocksds' Makefile.
+This will require you to have installed BlocksDS as per upstream documentation.
+
+Note:
+Currently, only the jansson backend is supported on the Nintendo DS (because I couldn't get the others to build).
+
+
 ## Dependencies
 
 Build:
