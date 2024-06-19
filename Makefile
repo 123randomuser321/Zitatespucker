@@ -165,6 +165,7 @@ uninstall-static :
 clean : 
 	-rm -rf $(BUILDDIR)
 	-rm -rf tests/build
+	-rm -rf lib
 
 check :
 	@echo "The tests assume that the library was built with all backends switched on."
