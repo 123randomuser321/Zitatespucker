@@ -64,7 +64,7 @@ endif
 objects = $(BUILDDIR)/Zitatespucker_common.o
 
 # -fPIC needs to be added due to the build failing with "relocation R_X86_64_PC32 against symbol `stderr@@GLIBC_2.2.5' can not be used when making a shared object" otherwise
-# gcc' manual recommends adding flags to both compiler and linker flags
+# gcc's manual recommends adding flags to both compiler and linker flags
 ifneq ($(ENABLE_JSON_C),)
 	HEADERS += Zitatespucker/Zitatespucker_json.h
 	override CFLAGS += -D ZITATESPUCKER_JSON -D ZITATESPUCKER_FEATURE_JSON_C -fPIC
