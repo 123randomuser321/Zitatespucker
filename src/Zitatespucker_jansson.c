@@ -29,7 +29,7 @@
 
 
 /* Internal headers */
-#include "Zitatespucker/Zitatespucker_json.h"
+#include "../Zitatespucker/Zitatespucker_json.h"
 
 
 /* Static function declarations */

@@ -33,7 +33,7 @@
 
 
 /* Internal headers */
-#include "Zitatespucker/Zitatespucker_sqlite.h"
+#include "../Zitatespucker/Zitatespucker_sqlite.h"
 
 
 /* Static function declarations */

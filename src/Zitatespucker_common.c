@@ -31,7 +31,7 @@
 
 
 /* Internal headers */
-#include "Zitatespucker/Zitatespucker_common.h"
+#include "../Zitatespucker/Zitatespucker_common.h"
 
 
 /* Common functions */
