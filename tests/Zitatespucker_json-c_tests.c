@@ -23,8 +23,8 @@
 
 
 /* Zitatespucker */
-#define ZITATESPUCKER_FEATURE_JSON_C
-#include "Zitatespucker/Zitatespucker.h"
+#define ZITATESPUCKER_JSON
+#include "../Zitatespucker/Zitatespucker.h"
 
 
 int main(int argc, char **argv)

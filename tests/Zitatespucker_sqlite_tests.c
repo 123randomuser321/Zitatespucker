@@ -23,8 +23,8 @@
 
 
 /* Zitatespucker */
-#define ZITATESPUCKER_FEATURE_SQLITE
-#include <Zitatespucker/Zitatespucker.h>
+#define ZITATESPUCKER_SQL
+#include "../Zitatespucker/Zitatespucker.h"
 
 
 int main(int argc, char **argv)
