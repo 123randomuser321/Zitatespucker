@@ -20,8 +20,6 @@
 # todo: windows
 BUILDDIR = build
 
-include Makefile.defs
-
 ifeq ($(DESTDIR),)
 	DESTDIR = $(BUILDDIR)
 endif
@@ -55,7 +53,7 @@ ifneq ($(DEBUG),)
 	override CFLAGS += -Wpedantic
 endif
 
-override CFLAGS += -std=c99 -I. -D ZITATESPUCKER_VERSION_MAJOR=$(MAJOR) -D ZITATESPUCKER_VERSION_MINOR=$(MINOR) -D ZITATESPUCKER_VERSION_PATCH=$(PATCH)
+override CFLAGS += -std=c99 -I.
 
 ifneq ($(NOPRINT),)
 	override CFLAGS += -D ZITATESPUCKER_NOPRINT=1

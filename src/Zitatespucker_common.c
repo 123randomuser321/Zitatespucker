@@ -20,10 +20,10 @@
 */
 
 
-/* check for version information, should be passed by make */
-#if !defined (ZITATESPUCKER_VERSION_MAJOR) || !defined (ZITATESPUCKER_VERSION_MINOR) || !defined (ZITATESPUCKER_VERSION_PATCH)
-	#error "Version information undefined, maybe a Makefile error?"
-#endif
+/* Version info */
+#define ZITATESPUCKER_VERSION_MAJOR		2
+#define ZITATESPUCKER_VERSION_MINOR		0
+#define ZITATESPUCKER_VERSION_PATCH		1
 
 
 /* Standard headers */

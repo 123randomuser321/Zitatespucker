@@ -24,8 +24,6 @@ export BLOCKSDSEXT		?= /opt/blocksds/external
 export WONDERFUL_TOOLCHAIN	?= /opt/wonderful
 ARM_NONE_EABI_PATH	?= $(WONDERFUL_TOOLCHAIN)/toolchain/gcc-arm-none-eabi/bin/
 
-include Makefile.defs
-
 # Source code paths
 # -----------------
 
@@ -42,8 +40,7 @@ ifneq ($(ENABLE_JANSSON),)
 	JANSSON_DEF = -D ZITATESPUCKER_JSON
 	JANSSON_SOURCE = src/Zitatespucker_jansson.c
 endif
-DEFINES		:= -D ZITATESPUCKER_VERSION_MAJOR=$(MAJOR) -D ZITATESPUCKER_VERSION_MINOR=$(MINOR) -D ZITATESPUCKER_VERSION_PATCH=$(PATCH) \
-				-D ZITATESPUCKER_NOPRINT=1 $(JANSSON_DEF)
+DEFINES		:= -D ZITATESPUCKER_NOPRINT=1 $(JANSSON_DEF)
 
 # Libraries
 # ---------
