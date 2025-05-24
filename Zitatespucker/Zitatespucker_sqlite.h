@@ -28,7 +28,7 @@
 
 
 /* Internal headers */
-#include "Zitatespucker/Zitatespucker_common.h"
+#include "Zitatespucker_common.h"
 
 
 /* Externally callable */
