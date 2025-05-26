@@ -80,7 +80,7 @@ size_t ZitatespuckerSQLGetAmountFromFile(const char *filename)
 	}
 
 	sqlite3_stmt *statement;
-	if (sqlite3_prepare_v2(db, "SELECT * FROM ZitatespuckerZitat", -1, &statement, NULL) != SQLITE_OK) {
+	if (sqlite3_prepare_v2(db, "SELECT COUNT(*) FROM ZitatespuckerZitat", -1, &statement, NULL) != SQLITE_OK) {
 		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: sqlite3_prepare_v2() failed:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
 		#endif
@@ -89,12 +89,14 @@ size_t ZitatespuckerSQLGetAmountFromFile(const char *filename)
 	}
 
 	// finally, we can start counting
-	// if I am understanding the docs correctly
-	// also, this doesn't properly communicate an error :(
-	while (sqlite3_step(statement) == SQLITE_ROW)
-		ret++;
+	if (sqlite3_step(statement) != SQLITE_ROW) {
+		#ifndef ZITATESPUCKER_NOPRINT
+		(void) fprintf(stderr, "%s:%d:%s: sqlite3_step() failed:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
+		#endif
+	} else {
+		ret = sqlite3_column_int(statement, 0);
+	}
 	
-	// but this should
 	if (sqlite3_finalize(statement) != SQLITE_OK) {
 		#ifndef ZITATESPUCKER_NOPRINT
 		(void) fprintf(stderr, "%s:%d:%s: sqlite3_finalize() reported an error:\n%s\n", __FILE__, __LINE__, __func__, sqlite3_errmsg(db));
